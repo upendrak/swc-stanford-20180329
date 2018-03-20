@@ -13,8 +13,8 @@ But
 - Command-line driven (programming, not drop-down menus)
 - Gives only what you ask for!
 
-Base R vs tidyverse
-====================
+1. Base R vs tidyverse
+======================
 
 You know how when you get a new smartphone, it comes with an email and calendar app... but they're not the greatest? I usually download the Google Calendar and Gmail apps on my phone because, even though they technically do the same thing, they do it better. R is similar in this way.
 
@@ -26,15 +26,15 @@ The tidyverse has two main goals:
 - Work with tidy (not messy) data
 - Make code more human readable
 
-Each package within the tidyverse is meant to do a particular thing, but each ultimately goes back to those two goals. We'll be using two packages in the tidyverse, called `dplyr` (for manipulating tidy data in R), and `ggplot2` (for visualizing tidy data in R).
+Each package within the tidyverse is meant to do a particular thing, but each ultimately goes back to those two goals. We'll be using two packages in the ``tidyverse``, called ``dplyr`` (for manipulating tidy data in R), and ``ggplot2`` (for visualizing tidy data in R).
 
-What is RStudio?
-================
+2. What is RStudio?
+===================
 
 Often, learning a programming language is made worse by an unintuitive and unhelpful user interface. For our workshop, we will be using RStudio, a graphical user interface (front-end) for R that is slightly more user-friendly than ‘Classic’ R’s GUI.
 
-The console window  
-~~~~~~~~~~~~~~~~~~
+2.1 The console window  
+~~~~~~~~~~~~~~~~~~~~~~
 
 There are some useful features available in the console:
 
@@ -44,8 +44,8 @@ There are some useful features available in the console:
     - When just typing, use tab autocomplete to fill in object names for you
     - When inside quotes ``'  '``, you can press tab to help you spell folder names correctly
 
-Trying out the Console
-~~~~~~~~~~~~~~~~~~~~~~
+2.2 Trying out the Console
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We’ll use the ``Console`` window first – as a (fancy!) calculator
 
@@ -233,10 +233,383 @@ What is the output when we execute the following code?
   - Avoid other characters; they get interpreted as math (”-”,”*”) or are hard to read (” ”) so should not be used in names
   - Avoid names of existing functions – e.g. summary. Some oneletter choices (c, C, F, t, T and S) are already used by R as names of functions, it’s best to avoid these too
 
-Reading in Data
-~~~~~~~~~~~~~~~
+Data Types
+==========
 
-First, let's see how we can read in data using base R, using the `read.csv()` command:
+1. Character
+~~~~~~~~~~~~
+
+Surround with quotes, can be any keyboard character
+
+.. code-block :: R
+
+  c <- 'Hello world! 123'
+  class(c)
+  # [1] "character"
+  typeof(c)
+  # [1] "character"
+
+2. Numeric
+~~~~~~~~~~
+
+No quotes, can be any number, decimal, or whole numbers
+
+.. code-block :: R
+
+  n <- 3.4
+  class(n)
+  # [1] "numeric"
+
+3. Integer
+~~~~~~~~~~
+
+No quotes, can be any whole number.  Place an `L` behind it, otherwise R will read it as a numeric
+
+.. code-block :: R
+
+  i <- 2L
+  class(i)
+  # [1] "integer"
+
+4. Complex
+~~~~~~~~~~
+
+Can use notation like ``+`` ``-``, and values like ``i`` for imaginary units in complex numbers.
+
+.. code-block :: R
+
+  comp <- 1+4i
+  class(comp)
+  # [1] "complex"
+
+5. Logical
+~~~~~~~~~~
+
+Are equal to either ``TRUE`` or ``FALSE`` in all caps
+
+.. code-block :: R
+
+  l <- TRUE
+  l <- FALSE
+  class(l)
+  # [1] "logical"
+
+6. List
+~~~~~~~
+
+Holds multiple of the above data types, including other lists.  surround with `list()`
+
+.. code-block :: R
+
+  mylist <- list(chars = 'c', nums = 1.4, logicals=TRUE, anotherList = list(a = 'a', b = 2))
+  class(mylist)
+  # [1] "list"
+
+.. warning :: 
+
+  Don't forget that the command ``str()`` also lists the class of each column within a data frame. It is good to use to make sure all of your data was imported correctly.
+
+7. Data Structures
+~~~~~~~~~~~~~~~~~~
+
+1. Atomic Vector
+^^^^^^^^^^^^^^^^
+
+Use ``c()`` notation (stands for combine).  All elements of a vector have to be of the same type.
+
+.. code-block :: R
+
+  log_vector <- c(TRUE, TRUE, FALSE, TRUE)
+  char_vector <- c("Uwe", "Gaius", "Liz")
+  char_vector <- c(char_vector, "Helper1", NA) #NA represents empty data
+  char_vector
+  # [1] "Uwe"     "Gaius"   "Liz"     "Helper1" NA       
+  length(char_vector)
+  # [1] 5
+  class(char_vector)
+  # [1] "character"
+  anyNA(char_vector)
+  # [1] TRUE
+
+When data is mixed, R tries to convert the data to what it thinks makes most sense.
+
+.. code-block :: R
+
+  mixed <- c("True", TRUE)
+  mixed 
+  # [1] "True" "TRUE"
+  #It has converted the logical to a character
+
+Using ``as.datatype`` (``as.logical``, ``as.character``, ``as.factor``, etc) will make R try to force it to be the this data type.
+
+.. code-block :: R
+
+  as.logical(mixed) 
+  # [1] TRUE TRUE
+
+Lists are like vectors except that you can use multiple data types.  Make a list using the ``list()`` function.
+
+.. code-block :: R
+
+  my_list <- list(1, "A", TRUE)
+  my_list
+  # [[1]]
+  # [1] 1
+  # 
+  # [[2]]
+  # [1] "A"
+  # 
+  # [[3]]
+  # [1] TRUE
+
+We can access a value of a list by referencing the index or by using the label.
+
+.. code-block :: R
+
+  my_list[1]
+  # [[1]]
+  # [1] 1
+
+.. code-block :: R
+
+  phonebook <- list(name="Upendra", phone="111-1111", age=27)
+  phonebook["name"]
+  # $name
+  # [1] "Gaius"
+
+2. Attributes
+^^^^^^^^^^^^^
+
+All objects can have arbitrary additional attributes, used to store metadata about the object. Attributes can be thought of as a named list (with unique names). Attributes can be accessed individually with ``attr()`` or all at once (as a list) with attributes().
+
+.. code-block :: R
+
+  y <- 1:10
+  attr(y, "my_attribute") <- "This is a vector"
+  attr(y, "my_attribute")
+  ## [1] "This is a vector"
+  str(attributes(y))
+  ## List of 1
+  ##  $ my_attribute: chr "This is a vector"
+
+
+By default, most attributes are lost when modifying a vector.
+
+.. code-block :: R
+
+  attributes(y[1])
+  ## NULL
+  attributes(sum(y))
+  ## NULL
+
+The only attributes not lost are the three most important:
+
+- Names, a character vector giving each element a name, described in names.
+- Dimensions, used to turn vectors into matrices and arrays, described in matrices and arrays.
+- Class, used to implement the S3 object system, described in S3.
+
+Each of these attributes has a specific accessor function to get and set values. When working with these attributes, use ``names(x)``, ``dim(x)``, and ``class(x)``, ``not attr(x, "names")``, ``attr(x, "dim")``, and ``attr(x, "class")``.
+
+3. Matrices
+~~~~~~~~~~~
+
+Matrices are 2 dimensional structures that hold only one data type.  Using ``ncol`` and ``nrow``, you can define its shape. You can fill in the matrix by assigning to ``data``.  By default, it fills in by column, but you can change this using the ``byrow`` argument.
+
+.. code-block :: R
+
+  m <- matrix(nrow=2, ncol=3)
+  m
+  #      [,1] [,2] [,3]
+  # [1,]   NA   NA   NA
+  # [2,]   NA   NA   NA
+  m <- matrix(data=1:6, nrow=2, ncol=3)
+  m
+  #      [,1] [,2] [,3]
+  # [1,]    1    3    5
+  # [2,]    2    4    6
+  m <- matrix(data=1:6, nrow=2, ncol=3, byrow=TRUE)
+  m
+  #      [,1] [,2] [,3]
+  # [1,]    1    2    3
+  # [2,]    4    5    6
+
+.. Note :: 
+
+  You can also have multi-dimensional structures called arrays. You can create this using the ``array()`` function, but it is outside the scope of this course.
+
+4. Data Frames 
+~~~~~~~~~~~~~~
+
+Data Frames are like matrices, but can hold multiple data types.  
+
+**Vectors** are to **Lists** as **Matrices** are to **Data Frames**
+
+.. code-block :: R
+
+  df <- data.frame(id=letters[1:10], x=1:10, y=11:20)
+  df
+  #    id  x  y
+  # 1   a  1 11
+  # 2   b  2 12
+  # 3   c  3 13
+  # 4   d  4 14
+  # 5   e  5 15
+  # 6   f  6 16
+  # 7   g  7 17
+  # 8   h  8 18
+  # 9   i  9 19
+  # 10  j 10 20
+
+  class(df)
+  # [1] "data.frame"
+
+  typeof(df)
+  # [1] "list"
+
+  head(df)
+  #   id x  y
+  # 1  a 1 11
+  # 2  b 2 12
+  # 3  c 3 13
+  # 4  d 4 14
+  # 5  e 5 15
+  # 6  f 6 16
+
+  tail(df)
+  #    id  x  y
+  # 5   e  5 15
+  # 6   f  6 16
+  # 7   g  7 17
+  # 8   h  8 18
+  # 9   i  9 19
+  # 10  j 10 20
+
+  nrow(df)
+  # [1] 10
+
+  ncol(df)
+  # [1] 3
+
+  str(df)
+  # 'data.frame': 10 obs. of  3 variables:
+  #  $ id: Factor w/ 10 levels "a","b","c","d",..: 1 2 3 4 5 6 7 8 9 10
+  #  $ x : int  1 2 3 4 5 6 7 8 9 10
+  #  $ y : int  11 12 13 14 15 16 17 18 19 20
+
+  summary(df)
+   #       id          x               y        
+   # a      :1   Min.   : 1.00   Min.   :11.00  
+   # b      :1   1st Qu.: 3.25   1st Qu.:13.25  
+   # c      :1   Median : 5.50   Median :15.50  
+   # d      :1   Mean   : 5.50   Mean   :15.50  
+   # e      :1   3rd Qu.: 7.75   3rd Qu.:17.75  
+   # f      :1   Max.   :10.00   Max.   :20.00  
+   # (Other):4                                  
+
+  names(df)
+  # [1] "id" "x"  "y" 
+
+5. Factors
+~~~~~~~~~~
+
+Factors are very useful when running statistics, and also clog up memory less than character vectors.
+
+They do this by storing each unique value as an integer, which takes up less space in memory than characters in a string.  Then it references that integer to the corresponding string so that it is human readable.
+
+.. code-block :: R
+
+  state <- factor(c("Arizona", "Colorado", "Arizona"))
+  state
+  # [1] Arizona  Colorado Arizona 
+  # Levels: Arizona Colorado
+
+  nlevels(state)
+  # [1] 2
+
+  levels(state)
+  # [1] "Arizona"  "Colorado"
+
+Factors by default don't actually have hierarchy.  That is to say, Arizona is not more or less than Colorado.  But sometimes we want factors to have hierarchy (e.g. low comes before medium comes before high).
+
+.. code-block :: R
+
+  ratings <- factor(c("low", "high", "medium", "low"))
+  ratings
+  # [1] low    high   medium low   
+  # Levels: high low medium
+
+If we look for the minimum of the factors, we get an error because they are not ordered
+
+.. code-block :: R
+
+  min(ratings) 
+  # Error in Summary.factor(c(2L, 1L, 3L, 2L), na.rm = FALSE) : 
+    # ‘min’ not meaningful for fact
+  levels(ratings)
+  # [1] "high"   "low"    "medium"
+
+We can add an order by putting ``ordered=TRUE`` into the arguments of the ``factor()`` function.  Then when we run ``min()``, it understands that "low" is the minimum value. Notice that the Levels change to less than symbols, showing there is a hierarchy.
+
+.. code-block :: R
+
+  ratings <- factor(ratings, levels=c("low", "medium", "high"), ordered=TRUE)
+  levels(ratings)
+  # [1] "low"    "medium" "high"  
+
+  min(ratings)
+  # [1] low
+  # Levels: low < medium < high
+
+When we run the ``str()`` function on a dataframe with factors, notice that it lists the type as a Factor and tells us how many levels it has. ``summary`` lists each factor level and tells us how many are in each group.
+
+.. code-block :: R
+
+  survey <- data.frame(number=c(1,2,2, 1, 2), group=c("A", "B","A", "A", "B"))
+  str(survey)
+  # 'data.frame': 5 obs. of  2 variables:
+  #  $ number: num  1 2 2 1 2
+  #  $ group : Factor w/ 2 levels "A","B": 1 2 1 1 2
+
+  summary(survey)
+   #     number    group
+   # Min.   :1.0   A:3  
+   # 1st Qu.:1.0   B:2  
+   # Median :2.0        
+   # Mean   :1.6        
+   # 3rd Qu.:2.0        
+   # Max.   :2.0        
+
+A useful command to count how many values overlap is the ``table()`` function.  Here we see that 2 rows in the table have a ``1`` in the ``number`` column and an ``A`` in the `group` column, but there are 0 rows that have a ``B`` and a ``1``.
+
+.. code-block :: R
+
+  table(survey$number, survey$group)
+    #   A B
+    # 1 2 0
+    # 2 1 2
+
+- EXERCISE
+
+1. Create the following data frame in R:
+
++-----+---------------+-------------+
+| Day | Magnification | Observation |
++=====+===============+=============+ 
+|  1  |      2        |   Growth    |
++-----+---------------+-------------+ 
+|  2  |      10       |    Death    |
++-----+---------------+-------------+
+|  3  |      5        |  No Change  |
++-----+---------------+-------------+
+|  4  |      2        |    Death    |
++-----+---------------+-------------+
+|  5  |      5        |   Growth    |
++-----+---------------+-------------+
+
+Reading in Data
+===============
+
+First, let's see how we can read in data using base R, using the ``read.csv()`` command:
 
 .. code-block :: R
 
@@ -295,9 +668,6 @@ We can also do more sophisticated things with these commands. Let's try a simple
 .. code-block :: R
 
   plot(gapminder$lifeExp, gapminder$gdpPercap)
-
-Data Frames
-~~~~~~~~~~~
 
 The ``gapminder`` data we just imported is in an object called a Data Frame. A data frame holds data in a table format, like what you might be used to in Excel. A "tidy" data frame has columns that each represent a variable and rows which hold one observation.
 
@@ -733,7 +1103,7 @@ When you’re finished with RStudio;
     
 .. Tip ::
 
-  To get rid of objects in your current session, use ``rm()``, e.g. ``rm(is.above.avg, new_gapminder, x, y)`` ... or RStudio’s ‘broom’ button on the Environment tab.
+  To get rid of objects in your current session, use ``rm()``, e.g. ``rm(is.above.avg, new_gapminder, x, y)`` ... or ``rm(list = ls())`` to remove every object loaded in the current session of R .. or use RStudio’s `broom` button on the Environment tab.
 
 Summary
 =======
