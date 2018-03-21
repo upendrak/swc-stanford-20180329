@@ -122,8 +122,8 @@ Which of the following will **NOT** return **TRUE**?
   C. TRUE > FALSE  
   D. 'a' > 'b'  
 
-Storing Data
-~~~~~~~~~~~~
+2.3 Storing Data
+~~~~~~~~~~~~~~~~
 
 We can quickly make comparisons, but we usually want to do things more sophisticated than that. For example, instead of typing "This is an important string that we want to do analysis on" into the console over and over again, we might want to give it a shorter name and then reference it later.
 
@@ -149,8 +149,8 @@ R stores data (and everything else) as objects. New objects are created when we 
   x+y
   # [1] 5
 
-Using the script window
-~~~~~~~~~~~~~~~~~~~~~~~
+2.4 Using the script window
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 While fine for occasional use, entering every command by hand is error-prone, and quickly gets tedious. A much better approach is to use a Script window 
 
@@ -233,11 +233,11 @@ What is the output when we execute the following code?
   - Avoid other characters; they get interpreted as math (”-”,”*”) or are hard to read (” ”) so should not be used in names
   - Avoid names of existing functions – e.g. summary. Some oneletter choices (c, C, F, t, T and S) are already used by R as names of functions, it’s best to avoid these too
 
-Data Types
-==========
+3. Data Types
+=============
 
-1. Character
-~~~~~~~~~~~~
+3.1 Character
+~~~~~~~~~~~~~
 
 Surround with quotes, can be any keyboard character
 
@@ -249,8 +249,8 @@ Surround with quotes, can be any keyboard character
   typeof(c)
   # [1] "character"
 
-2. Numeric
-~~~~~~~~~~
+3.2 Numeric
+~~~~~~~~~~~
 
 No quotes, can be any number, decimal, or whole numbers
 
@@ -260,8 +260,8 @@ No quotes, can be any number, decimal, or whole numbers
   class(n)
   # [1] "numeric"
 
-3. Integer
-~~~~~~~~~~
+3.3 Integer
+~~~~~~~~~~~
 
 No quotes, can be any whole number.  Place an `L` behind it, otherwise R will read it as a numeric
 
@@ -271,8 +271,8 @@ No quotes, can be any whole number.  Place an `L` behind it, otherwise R will re
   class(i)
   # [1] "integer"
 
-4. Complex
-~~~~~~~~~~
+3.4 Complex
+~~~~~~~~~~~
 
 Can use notation like ``+`` ``-``, and values like ``i`` for imaginary units in complex numbers.
 
@@ -282,8 +282,8 @@ Can use notation like ``+`` ``-``, and values like ``i`` for imaginary units in 
   class(comp)
   # [1] "complex"
 
-5. Logical
-~~~~~~~~~~
+3.5 Logical
+~~~~~~~~~~~
 
 Are equal to either ``TRUE`` or ``FALSE`` in all caps
 
@@ -294,8 +294,8 @@ Are equal to either ``TRUE`` or ``FALSE`` in all caps
   class(l)
   # [1] "logical"
 
-6. List
-~~~~~~~
+3.6 List
+~~~~~~~~
 
 Holds multiple of the above data types, including other lists.  surround with `list()`
 
@@ -309,11 +309,11 @@ Holds multiple of the above data types, including other lists.  surround with `l
 
   Don't forget that the command ``str()`` also lists the class of each column within a data frame. It is good to use to make sure all of your data was imported correctly.
 
-7. Data Structures
-~~~~~~~~~~~~~~~~~~
+3.7 Data Structures
+~~~~~~~~~~~~~~~~~~~
 
-1. Atomic Vector
-^^^^^^^^^^^^^^^^
+3.7.1 Atomic Vector
+^^^^^^^^^^^^^^^^^^^
 
 Use ``c()`` notation (stands for combine).  All elements of a vector have to be of the same type.
 
@@ -377,8 +377,8 @@ We can access a value of a list by referencing the index or by using the label.
   # $name
   # [1] "Gaius"
 
-2. Attributes
-^^^^^^^^^^^^^
+3.7.2 Attributes
+^^^^^^^^^^^^^^^^
 
 All objects can have arbitrary additional attributes, used to store metadata about the object. Attributes can be thought of as a named list (with unique names). Attributes can be accessed individually with ``attr()`` or all at once (as a list) with attributes().
 
@@ -410,8 +410,8 @@ The only attributes not lost are the three most important:
 
 Each of these attributes has a specific accessor function to get and set values. When working with these attributes, use ``names(x)``, ``dim(x)``, and ``class(x)``, ``not attr(x, "names")``, ``attr(x, "dim")``, and ``attr(x, "class")``.
 
-3. Matrices
-~~~~~~~~~~~
+3.8 Matrices
+~~~~~~~~~~~~
 
 Matrices are 2 dimensional structures that hold only one data type.  Using ``ncol`` and ``nrow``, you can define its shape. You can fill in the matrix by assigning to ``data``.  By default, it fills in by column, but you can change this using the ``byrow`` argument.
 
@@ -437,8 +437,8 @@ Matrices are 2 dimensional structures that hold only one data type.  Using ``nco
 
   You can also have multi-dimensional structures called arrays. You can create this using the ``array()`` function, but it is outside the scope of this course.
 
-4. Data Frames 
-~~~~~~~~~~~~~~
+3.9 Data Frames 
+~~~~~~~~~~~~~~~
 
 Data Frames are like matrices, but can hold multiple data types.  
 
@@ -509,8 +509,8 @@ Data Frames are like matrices, but can hold multiple data types.
   names(df)
   # [1] "id" "x"  "y" 
 
-5. Factors
-~~~~~~~~~~
+3.10 Factors
+~~~~~~~~~~~~
 
 Factors are very useful when running statistics, and also clog up memory less than character vectors.
 
@@ -606,8 +606,8 @@ A useful command to count how many values overlap is the ``table()`` function.  
 |  5  |      5        |   Growth    |
 +-----+---------------+-------------+
 
-Reading in Data
-===============
+4. Reading in Data
+==================
 
 First, let's see how we can read in data using base R, using the ``read.csv()`` command:
 
@@ -762,11 +762,11 @@ Use ``str()`` to look at the structure of the dataframe and ``summary()`` to get
 
   dim(gapminder)
 
-Subsetting
-~~~~~~~~~~
+4.1 Subsetting
+~~~~~~~~~~~~~~
 
-Base R
-^^^^^^
+4.1.1 Base R
+^^^^^^^^^^^^^
 
 Suppose we were interested in the life expectancy (i.e. 4th column) for 1957 for Afganistan in the years 1952, 1962, and 1977 (i.e. rows 1, 3, and 5). How to select these multiple elements?
 
@@ -948,8 +948,8 @@ Instead of specifying rows/columns of interest by number, or through vectors of 
 
 This is more typing than the other options, but is much easier to debug/reuse.
 
-Dplyr
-^^^^^
+4.1.2 Dplyr
+^^^^^^^^^^^
 
 Remember how we mentioned earlier that data should be "tidy", that is each variable should be represented in one column and each row represents one observation.  The `tidyverse` has a package to help us work with data in a tidy way.  We are now going to discuss a package that helps you to manipulate your data, `dplyr`.
 
@@ -1085,37 +1085,6 @@ We can also use outside information to help subset data.
 
 ``%in%`` will enable you to search all lines in the column country for all character strings in the two.countries file and will return a TRUE if it finds an one of them.
 
-# EXERCISE
+- **EXERCISE**
 
-Create a new dataframe that contains only country names, years, and life expectancies of the ``gapminder`` dataset. Use this new dataframe to calculate minimum & maximum expectancies.
-
-Quitting R
-===========
-
-When you’re finished with RStudio;
-
-- Ctrl-Q, or the drop-down menus, or entering q() at the command line all start the exit process
-- You will be asked “Save workspace image to ∼/.RData?”
-    + No/Don’t Save: nothing is saved, and is not available when you re-start. This is recommended, because you will do different things in each session
-    + Yes: Everything in memory is stored in R’s internal format (.Rdata) and will be available when you re-start RStudio
-    + Cancel: don’t quit, go back
-- Writing about what you did (output from a script) often takes much longer than re-running that script’s analyses – so often, a ‘commented’ script is all the R you need to store
-    
-.. Tip ::
-
-  To get rid of objects in your current session, use ``rm()``, e.g. ``rm(is.above.avg, new_gapminder, x, y)`` ... or ``rm(list = ls())`` to remove every object loaded in the current session of R .. or use RStudio’s `broom` button on the Environment tab.
-
-Summary
-=======
-
-- In RStudio, read in data from the pop-up menu in the Environment window (or Tools menu)
-- Data frames store data; can have many of these objects – and multiple other objects, too
-- Identify vectors with $, subsets with square brackets
-- Many useful summary functions are available, with sensible names
-- Scripts are an important drudgery-avoidance tool!
-
-References
-==========
-
-1. Lectures from Ken Rice at University of Washington, Summer Institute for Statistical Genetics - http://faculty.washington.edu/kenrice/rintro/indexSEA15.shtml
-2. Scripts & Exercise from Asher Haug-Baltzell - https://github.com/asherkhb/intro_r
+Create a new dataframe that contains only country names, years, and life expectancies of the ``gapminder`` dataset. Use this new dataframe to calculate minimum & maximum life expectancies.

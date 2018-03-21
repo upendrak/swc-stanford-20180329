@@ -9,11 +9,11 @@ Let's get started by making sure our working directory is correct.
 
 	getwd() # Are you in your Home directory? If so nothing needs to be done
 
-Loops 
-=====
+5. Loops 
+========
 
-1. For loops
-~~~~~~~~~~~~
+5.1 For loops
+~~~~~~~~~~~~~~
 
 Sometimes you'll want to apply the same function call to a collection of objects. For instance, say you want the avg.life expectance for each continent. To do that normally, we would do something like the following:
 
@@ -73,7 +73,7 @@ Let's use a different variable and see if we get the same results.
 	# [1] "The life expectancy in Africa is 23.599 to 76.442"
 	# 
 
-1.1 Nesting for loops
+5.2 Nesting for loops
 ^^^^^^^^^^^^^^^^^^^^^
 
 You can nest ``for`` loops as well!  Here for each value of ``cont`` (a.k.a each value of ``unique(gapminder$continent)``), we will also loop through each value of ``yr`` (a.k.a ``unique(gapminder$year)``).
@@ -96,7 +96,7 @@ You can nest ``for`` loops as well!  Here for each value of ``cont`` (a.k.a each
 	# [1] "The life expectancy in 1952 in Africa is 30 to 52.724"
 	# [1] "The life expectancy in 1957 in Africa is 31.57 to 58.089"
 
-**Limitations of ``for loops``**
+**Limitations of for loops**
 
 For loops are very usefule for certain data types, but at times can become very slow. Below are some rules for using for loops as opposed to apply functions (which we are going to talk about next).
 
@@ -104,13 +104,13 @@ For loops are very usefule for certain data types, but at times can become very 
 2. Don't grow objects (via ``c``, ``cbind``, etc) during the loop
 3. Allocate an object to hold the results and fill it in during the loop
 
-2. Conditionals
+6. Conditionals
 ===============
 
-2.1 If else 
+6.1 If else 
 ~~~~~~~~~~~
 
-2.1.1 If statment
+6.1.1 If statment
 ^^^^^^^^^^^^^^^^^
 
 When coding sometimes you want a particular function to be applied if a condition is true and sometimes a different function if it is not. To do this you need to use an if or if...else statement
@@ -150,8 +150,8 @@ Let's have a ``Greater than avg.`` statement returned if the value within the ``
 	# [1] "72.95 is greater than avg."
 	# [1] "75.651 is greater than avg."
 
-2.1.2 If..else statement
-^^^^^^^^^^^^^^^^^^^^^^^
+6.1.2 If..else statement
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 The basic syntax is 
 
@@ -211,7 +211,7 @@ D. an error message
 
 2. How could you change the code so that if ``x`` is less than 0 you get a message saying ``x is less than zero``? 
 
-3. Functions
+7. Functions
 ============
 
 A functions is a piece of code written to carry out a specified task; they allow you to incorporate sets of instructions that you want to use mutliple times or, if you have a complex set of instructions, keep it together within a small program.
@@ -287,10 +287,10 @@ When we call this function, the value we input is assigned to the object `temp` 
 
 1. Create a function called ``Avg`` that calculates the average of 2 numbers. Don't forget to check your work.
 
-4. Plotting
+8. Plotting
 ===========
 
-4.1. Basic plotting
+8.1 Basic plotting
 ~~~~~~~~~~~~~~~~~~~
 
 Plotting is essential and can be done in base R
@@ -314,7 +314,7 @@ This dataset has information on plants of 3 types of irises. They've measured th
 
 Let’s make three main kinds of plot using base R—a scatterplot, a histogram, and a boxplot—then we’ll make these same plots using a R package specifically designed for making plots and figures called ggplot.
 
-4.1.1 Scatterplot
+8.1.1 Scatterplot
 ^^^^^^^^^^^^^^^^^
 
 The basic plot function is ``plot(x, y, ….)`` which x corresponding to your x-variable and y to the y-variable.
@@ -335,7 +335,7 @@ We see a scatterplot that shows there is a positive association between sepal an
 
 |plot-2|
 
-4.2.2 Histogram
+8.1.2 Histogram
 ^^^^^^^^^^^^^^^
 
 Plot will default to a scatterplot, but if you want a histogram then you need to use the type argument.
@@ -346,7 +346,7 @@ Plot will default to a scatterplot, but if you want a histogram then you need to
 
 |plot-3|
 
-4.2.3 Boxplot
+8.1.3 Boxplot
 ^^^^^^^^^^^^^
 
 To make a boxplot, you can use the function ``boxplot(x ~ y, data = dataframe)``. Let’s plot sepal length as a function of species.
@@ -371,7 +371,7 @@ Plotting in base R can be flexible and you can actually do a lot with it, but ma
 
 	plot(iris$Sepal.Length, iris$Petal.Length)
 
-4.2 ggplot2
+8.2 ggplot2
 ~~~~~~~~~~~
 
 ggplot2 works on the idea that every plot has three essential elements:
@@ -437,7 +437,7 @@ Let's try plotting the same thing but add the geom_point.
 
 Add another layer ``geom_smooth``, which allows us to add a trend line or spline to the scatter plot. 
 
-4.2.1 Histogram
+8.2.1 Histogram
 ^^^^^^^^^^^^^^^
 
 Let's instead try a histogram for Sepal Length
@@ -476,7 +476,7 @@ These histograms are stacked on each other, but what if instead we want them ind
 
 |ggplot-14|
 
-4.2.2 Scatterplots
+8.2.2 Scatterplots
 ^^^^^^^^^^^^^^^^^^
 
 We can also change the appeal and readability of plots. Let's take a look at scatterplots and how we can change things to help explore our data. First, let's try changing the color. If we give it a continuous variable, it creates a gradient.
@@ -517,7 +517,7 @@ For scatterplots, we can also assign shapes. Shapes only make sense if used with
 
 You can customize all of the colors and shapes instead of leaving it default. In the resources section, you can find information on these more advanced topics.
 
-4.2.3 Boxplot
+8.2.3 Boxplot
 ^^^^^^^^^^^^^
 
 For a basic boxplot, you can use ``geom_boxplot()``
@@ -544,7 +544,7 @@ It outlined the boxes buut say we want to fill in the boxes instead. For this, w
 
 |ggplot-26|
 
-4.2.4 Barplot
+8.2.4 Barplot
 ^^^^^^^^^^^^^
 
 There are a few additional features on barplots.  We'll start with a basic barplot.
@@ -661,14 +661,14 @@ ggplot2 makes this a little more comprehensive by adding the following:
 	
 	Pretty much anything that you would like to change can be. You can find numerous examples by googling what you want to change (e.g. google ``remove background grid ggplot``). 
 
-5. Project Management With RStudio
+9. Project Management With RStudio
 ==================================
 
 The scientific process is naturally incremental, and many projects start life as random notes, some code, then a manuscript, and eventually everything is a bit mixed together.
 
 One of the most powerful and useful aspects of RStudio is its project management functionality. We’ll be using this today to create a self-contained, reproducible project.
 
-5.1 Creating a self-contained project
+9.1 Creating a self-contained project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We’re going to create a new project in RStudio:
@@ -698,9 +698,11 @@ Next download five year gapminder data set from `here <https://raw.githubusercon
 
 .. Note ::
 
-	There are more than one way to do this step. You can do something like this in Terminal 
+	There are more than one way to do this step. You can do something like this in Terminal in Rstudio
 
-	``curl https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv > gapminder-FiveYearData.csv``
+	.. code-block:: bash
+
+		curl https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv > gapminder-FiveYearData.csv
 
 Now load the data using ``read.csv`` command and assign it to a variable ``gap5`` (it can be anything)
 
@@ -719,7 +721,7 @@ You can run ``head`` to make sure the data is loaded properly, ``dim`` to find o
 
 Finally save the file usign a file name ``gapminder_five_year``
 
-5.2 Rstudio and Git
+9.2 Rstudio and Git
 ~~~~~~~~~~~~~~~~~~~
 
 You have already seen version control on the shell, now let's look how git is integrated into Rstudio and how we can put the current script ``gapminder_five_year.R`` under version control. 
@@ -735,6 +737,8 @@ Click to select ``gapminder_five_year.R``, ``data`` ``.gitignore`` ``my_project.
 Click ``Commit`` which will open another window
 
 Type a message in Commit message. In this case "Added files and data"
+
+|Rgit_commit|
 
 Click Commit. Once the files are committed you can close the window
 
@@ -754,6 +758,36 @@ Once you save it you will save the file ``gapminder_five_year.R`` under staged (
 check Staged checkbox for ``gapminder_five_year.R`` file, click Commit and enter new commit message ``Added ggplot code for scatter plots``
 
 The rest of the steps such as creating a repository, pushing and pulling can be done from the terminal or on the shell.
+
+10. Summary
+===========
+
+- In RStudio, read in data from the pop-up menu in the Environment window (or Tools menu)
+- Data frames store data; can have many of these objects – and multiple other objects, too
+- Identify vectors with $, subsets with square brackets
+- Many useful summary functions are available, with sensible names
+- Scripts are an important drudgery-avoidance tool!
+- Loops and functions avoid repetiotion of code and make the code run faster
+- ggplot2 can generate several different type of plots and you can easily customize depending on your need
+- Rstudio allows for project management to keep all your code along with the data at one place
+- Also useful scripts to write your R code 
+- The integration of git in Rstudio helps you to put you project under version control
+
+11. Quitting R
+==============
+
+When you’re finished with RStudio;
+
+- Ctrl-Q, or the drop-down menus, or entering q() at the command line all start the exit process
+- You will be asked “Save workspace image to ∼/.RData?”
+    + No/Don’t Save: nothing is saved, and is not available when you re-start. This is recommended, because you will do different things in each session
+    + Yes: Everything in memory is stored in R’s internal format (.Rdata) and will be available when you re-start RStudio
+    + Cancel: don’t quit, go back
+- Writing about what you did (output from a script) often takes much longer than re-running that script’s analyses – so often, a ‘commented’ script is all the R you need to store
+    
+.. Tip ::
+
+  To get rid of objects in your current session, use ``rm()``, e.g. ``rm(is.above.avg, new_gapminder, x, y)`` ... or ``rm(list = ls())`` to remove every object loaded in the current session of R .. or use RStudio’s `broom` button on the Environment tab.
 
 .. |plot-1| image:: ../img/plot-1.png
   :width: 750
@@ -860,5 +894,9 @@ The rest of the steps such as creating a repository, pushing and pulling can be 
   :height: 700
 
 .. |ggplot-11| image:: ../img/ggplot-11.png
+  :width: 750
+  :height: 700
+
+.. |Rgit_commit| image:: ../img/Rgit_commit.png
   :width: 750
   :height: 700
