@@ -235,6 +235,15 @@ What is the output when we execute the following code?
 
 3. Data Types
 =============
+There are 6 main types: `double (numeric)`, `integer`, `complex`, `logical` and `character`. The sixth one "raw" will not be discussed in this workshop.
+
+R provides many functions to examine features of vectors and other objects, for example
+
+ - ``class()`` - what kind of object is it (high-level)?
+ - ``typeof()`` - what is the object’s data type (low-level)?
+ - ``length()`` - how long is it? What about two dimensional objects?
+ - ``attributes()`` - does it have any metadata?
+
 
 3.1 Character
 ~~~~~~~~~~~~~
@@ -249,16 +258,18 @@ Surround with quotes, can be any keyboard character
   typeof(c)
   # [1] "character"
 
-3.2 Numeric
+3.2 Double (numeric)
 ~~~~~~~~~~~
 
-No quotes, can be any number, decimal, or whole numbers
+No quotes, can be any real number, decimal, or whole numbers
 
 .. code-block :: R
 
   n <- 3.4
   class(n)
   # [1] "numeric"
+  typeof(n)
+  # [1] "double"
 
 3.3 Integer
 ~~~~~~~~~~~
@@ -294,28 +305,15 @@ Are equal to either ``TRUE`` or ``FALSE`` in all caps
   class(l)
   # [1] "logical"
 
-3.6 List
-~~~~~~~~
 
-Holds multiple of the above data types, including other lists.  surround with `list()`
 
-.. code-block :: R
-
-  mylist <- list(chars = 'c', nums = 1.4, logicals=TRUE, anotherList = list(a = 'a', b = 2))
-  class(mylist)
-  # [1] "list"
-
-.. warning :: 
-
-  Don't forget that the command ``str()`` also lists the class of each column within a data frame. It is good to use to make sure all of your data was imported correctly.
-
-3.7 Data Structures
+4 Data Structures
 ~~~~~~~~~~~~~~~~~~~
 
-3.7.1 Atomic Vector
+4.1 Atomic Vector
 ^^^^^^^^^^^^^^^^^^^
 
-Use ``c()`` notation (stands for combine).  All elements of a vector have to be of the same type.
+Use ``c()`` notation (stands for combine).  All elements of a vector have to be of the same data type.
 
 .. code-block :: R
 
@@ -331,15 +329,46 @@ Use ``c()`` notation (stands for combine).  All elements of a vector have to be 
   anyNA(char_vector)
   # [1] TRUE
 
-When data is mixed, R tries to convert the data to what it thinks makes most sense.
+Given that atomic vectors *must* be of all one data type, what will happen when data is mixed?
 
 .. code-block :: R
 
   mixed <- c("True", TRUE)
   mixed 
   # [1] "True" "TRUE"
+  typeof(mixed)
+  # [1] "character"
   #It has converted the logical to a character
 
+R will create a resulting vector with a mode that can most easily accommodate all the elements it contains. This is something called type coercion, and it is the source of many surprises and the reason why we need to be aware of the basic data types and how R will interpret them.
+
+- **EXERCISE**
+Uncover the heirarchy of the data types using the elements in this vector "anothermixed".
+
+.. code-block :: R
+
+    anothermixed <- c("Stanford",FALSE, 2L, 3.14)
+   
+    test_c_i <- c("Stanford", 2L)
+    typeof(test_c_i)
+    # [1] "character"
+    
+    test_c_d <- c("Stanford", 3.14)
+    typeof(test_c_d)
+    # [1] "character"
+    
+    test_l_i <- c(FALSE, 2L)
+    typeof(test_l_i)
+    # [1] "integer"
+    
+    test_l_d <- c(FALSE, 3.14)
+    typeof(test_l_d)
+    # [1] "double"
+    
+    test_i_d <- c(2L, 3.14)
+    typeof(test_i_d)
+    [1] "double"
+    
 Using ``as.datatype`` (``as.logical``, ``as.character``, ``as.factor``, etc) will make R try to force it to be the this data type.
 
 .. code-block :: R
@@ -347,6 +376,20 @@ Using ``as.datatype`` (``as.logical``, ``as.character``, ``as.factor``, etc) wil
   as.logical(mixed) 
   # [1] TRUE TRUE
 
+4.2 List
+~~~~~~~~
+
+Holds multiple of the above data types, including other lists.  surround with `list()`
+
+.. code-block :: R
+
+  mylist <- list(chars = 'c', nums = 1.4, logicals=TRUE, anotherList = list(a = 'a', b = 2))
+  class(mylist)
+  # [1] "list"
+
+.. warning :: 
+
+  Don't forget that the command ``str()`` also lists the class of each column within a data frame. It is good to use to make sure all of your data was imported correctly.
 Lists are like vectors except that you can use multiple data types.  Make a list using the ``list()`` function.
 
 .. code-block :: R
@@ -377,40 +420,8 @@ We can access a value of a list by referencing the index or by using the label.
   # $name
   # [1] "Gaius"
 
-3.7.2 Attributes
-^^^^^^^^^^^^^^^^
 
-All objects can have arbitrary additional attributes, used to store metadata about the object. Attributes can be thought of as a named list (with unique names). Attributes can be accessed individually with ``attr()`` or all at once (as a list) with attributes().
-
-.. code-block :: R
-
-  y <- 1:10
-  attr(y, "my_attribute") <- "This is a vector"
-  attr(y, "my_attribute")
-  ## [1] "This is a vector"
-  str(attributes(y))
-  ## List of 1
-  ##  $ my_attribute: chr "This is a vector"
-
-
-By default, most attributes are lost when modifying a vector.
-
-.. code-block :: R
-
-  attributes(y[1])
-  ## NULL
-  attributes(sum(y))
-  ## NULL
-
-The only attributes not lost are the three most important:
-
-- Names, a character vector giving each element a name, described in names.
-- Dimensions, used to turn vectors into matrices and arrays, described in matrices and arrays.
-- Class, used to implement the S3 object system, described in S3.
-
-Each of these attributes has a specific accessor function to get and set values. When working with these attributes, use ``names(x)``, ``dim(x)``, and ``class(x)``, ``not attr(x, "names")``, ``attr(x, "dim")``, and ``attr(x, "class")``.
-
-3.8 Matrices
+4.3 Matrices
 ~~~~~~~~~~~~
 
 Matrices are 2 dimensional structures that hold only one data type.  Using ``ncol`` and ``nrow``, you can define its shape. You can fill in the matrix by assigning to ``data``.  By default, it fills in by column, but you can change this using the ``byrow`` argument.
@@ -437,7 +448,7 @@ Matrices are 2 dimensional structures that hold only one data type.  Using ``nco
 
   You can also have multi-dimensional structures called arrays. You can create this using the ``array()`` function, but it is outside the scope of this course.
 
-3.9 Data Frames 
+4.4 Data Frames 
 ~~~~~~~~~~~~~~~
 
 Data Frames are like matrices, but can hold multiple data types.  
@@ -509,7 +520,7 @@ Data Frames are like matrices, but can hold multiple data types.
   names(df)
   # [1] "id" "x"  "y" 
 
-3.10 Factors
+4.5 Factors
 ~~~~~~~~~~~~
 
 Factors are very useful when running statistics, and also clog up memory less than character vectors.
@@ -606,7 +617,7 @@ A useful command to count how many values overlap is the ``table()`` function.  
 |  5  |      5        |   Growth    |
 +-----+---------------+-------------+
 
-4. Reading in Data
+6. Reading in Data
 ==================
 
 First, let's see how we can read in data using base R, using the ``read.csv()`` command:
@@ -762,10 +773,10 @@ Use ``str()`` to look at the structure of the dataframe and ``summary()`` to get
 
   dim(gapminder)
 
-4.1 Subsetting
+6.1 Subsetting
 ~~~~~~~~~~~~~~
 
-4.1.1 Base R
+6.1.1 Base R
 ^^^^^^^^^^^^^
 
 Suppose we were interested in the life expectancy (i.e. 4th column) for 1957 for Afganistan in the years 1952, 1962, and 1977 (i.e. rows 1, 3, and 5). How to select these multiple elements?
@@ -833,11 +844,11 @@ Negative values correspond to dropping those rows/columns;
 .. code-block :: R
 
   gapminder[-3:-1704,] # everything but the first two rows will be dropped
-  # A tibble: 2 x 7
-  #       country continent  year lifeExp     pop gdpPercap lifeExpMonths
-  #         <chr>     <chr> <int>   <dbl>   <int>     <dbl>         <dbl>
-  # 1 Afghanistan      Asia  1952  28.801 8425333  779.4453       345.612
-  # 2 Afghanistan      Asia  1957  30.332 9240934  820.8530       363.984
+  # A tibble: 2 x 6
+  #       country continent  year lifeExp     pop gdpPercap 
+  #         <chr>     <chr> <int>   <dbl>   <int>     <dbl>         
+  # 1 Afghanistan      Asia  1952  28.801 8425333  779.4453       
+  # 2 Afghanistan      Asia  1957  30.332 9240934  820.8530       
 
 As well as storing numbers and character strings (like "United States", "Canada") R can also store logicals – `TRUE` and `FALSE`.
 To make a new vector, with elements that are `TRUE` if life expectancy is above 71.5 and FALSE otherwise;
@@ -861,19 +872,19 @@ Which countries and during what years were these? (And what was the avg. life ex
 .. code-block :: R
 
   gapminder[is.above.avg,] # just the rows for which is.above.avg is TRUE
-  # A tibble: 375 x 7
-  #      country continent  year lifeExp      pop gdpPercap lifeExpMonths
-  #        <chr>     <chr> <int>   <dbl>    <int>     <dbl>         <dbl>
-  #  1   Albania    Europe  1987  72.000  3075321  3738.933       864.000
-  #  2   Albania    Europe  1992  71.581  3326498  2497.438       858.972
-  #  3   Albania    Europe  1997  72.950  3428038  3193.055       875.400
-  #  4   Albania    Europe  2002  75.651  3508512  4604.212       907.812
-  #  5   Albania    Europe  2007  76.423  3600523  5937.030       917.076
-  #  6   Algeria    Africa  2007  72.301 33333216  6223.367       867.612
-  #  7 Argentina  Americas  1992  71.868 33958947  9308.419       862.416
-  #  8 Argentina  Americas  1997  73.275 36203463 10967.282       879.300
-  #  9 Argentina  Americas  2002  74.340 38331121  8797.641       892.080
-  # 10 Argentina  Americas  2007  75.320 40301927 12779.380       903.840
+  # A tibble: 375 x 6
+  #      country continent  year lifeExp      pop gdpPercap 
+  #        <chr>     <chr> <int>   <dbl>    <int>     <dbl>         
+  #  1   Albania    Europe  1987  72.000  3075321  3738.933       
+  #  2   Albania    Europe  1992  71.581  3326498  2497.438       
+  #  3   Albania    Europe  1997  72.950  3428038  3193.055       
+  #  4   Albania    Europe  2002  75.651  3508512  4604.212       
+  #  5   Albania    Europe  2007  76.423  3600523  5937.030       
+  #  6   Algeria    Africa  2007  72.301 33333216  6223.367       
+  #  7 Argentina  Americas  1992  71.868 33958947  9308.419       
+  #  8 Argentina  Americas  1997  73.275 36203463 10967.282       
+  #  9 Argentina  Americas  2002  74.340 38331121  8797.641       
+  # 10 Argentina  Americas  2007  75.320 40301927 12779.380       
 
   > gapminder[is.above.avg,4] # combining TRUE/FALSE (rows) and numbers (columns)
   # A tibble: 375 x 1
@@ -948,78 +959,48 @@ Instead of specifying rows/columns of interest by number, or through vectors of 
 
 This is more typing than the other options, but is much easier to debug/reuse.
 
-4.1.2 Dplyr
+6.1.2 Dplyr
 ^^^^^^^^^^^
 
 Remember how we mentioned earlier that data should be "tidy", that is each variable should be represented in one column and each row represents one observation.  The `tidyverse` has a package to help us work with data in a tidy way.  We are now going to discuss a package that helps you to manipulate your data, `dplyr`.
 
-If you haven't already, install dplyr
-
-Don't forget to load the package so we can use its functionality
+If you haven't already, install dplyr and load the package so we can use its functionality
 
 .. code-block :: R
 
+  install.packages('dplyr')
   library(dplyr)
+
 
 dplyr works by piping commands, like you learned to do in the command line.  Instead of the pipe `|`, we use `%>%`.
 
+Subsetting in dplyr uses two functions:
+- ``select()``
+- ``filter()``
+
+Using select()
+
+If, for example, we wanted to move forward with only a few of the variables in our dataframe we could use the `select()` function. This will subset the dataframe by columns.
+
 .. code-block :: R
 
-  gapminder %>% select(lifeExp) %>% min()
-  # [1] 23.599
-  min(gapminder$lifeExp)
-  # [1] 23.599
+  # without pipes
+  select(gapminder,year,country,gdpPercap)
+  
+  # with pipes
+  gaminder %>% select(year,country,gdpPercap)
+  
+To help you understand why we wrote that in that way, let's walk through it step by step. 
+First we summon the gapminder dataframe and pass it on, using the pipe symbol ``%>%``, to the next step, which is the ``select()`` function. 
+In this case we don't specify which data object we use in the ``select()`` function since in gets that from the previous pipe.
 
 .. important ::
 
-  An important difference between `dplyr` and base R is when use character strings we don't need to enclose them in quotation marks as we did above (i.e. gapminder[,'lifeExp'])
+  An important difference between `dplyr` and base R is when use character strings we don't need to enclose them in quotation marks as we did above (i.e. gapminder[,'year'])
 
+Using filter()
 
-If we want to make a new column, use `mutate`.  Don't forget we have to assign it if we want to keep the changes
-
-.. code-block :: R
-
-  gapminder <- gapminder %>% mutate(NewColumn = lifeExp * 12)
-  gapminder
-
-  # A tibble: 1,704 x 8
-  #        country continent  year lifeExp      pop gdpPercap lifeExpMonths NewColumn
-  #          <chr>     <chr> <int>   <dbl>    <int>     <dbl>         <dbl>     <dbl>
-  #  1 Afghanistan      Asia  1952  28.801  8425333  779.4453       345.612   345.612
-  #  2 Afghanistan      Asia  1957  30.332  9240934  820.8530       363.984   363.984
-  #  3 Afghanistan      Asia  1962  31.997 10267083  853.1007       383.964   383.964
-  #  4 Afghanistan      Asia  1967  34.020 11537966  836.1971       408.240   408.240
-  #  5 Afghanistan      Asia  1972  36.088 13079460  739.9811       433.056   433.056
-  #  6 Afghanistan      Asia  1977  38.438 14880372  786.1134       461.256   461.256
-  #  7 Afghanistan      Asia  1982  39.854 12881816  978.0114       478.248   478.248
-  #  8 Afghanistan      Asia  1987  40.822 13867957  852.3959       489.864   489.864
-  #  9 Afghanistan      Asia  1992  41.674 16317921  649.3414       500.088   500.088
-  # 10 Afghanistan      Asia  1997  41.763 22227415  635.3414       501.156   501.156
-  # ... with 1,694 more rows
-
-If we want to select all columns except 1, we can do that with the `-` operator.  Remember that if we want to save anything we are doing, we must store it in a variable.
-
-.. code-block :: R
-
-  gapminder <- gapminder %>% select(-NewColumn)
-  gapminder
-  # A tibble: 1,704 x 7
-  #        country continent  year lifeExp      pop gdpPercap lifeExpMonths
-  #          <chr>     <chr> <int>   <dbl>    <int>     <dbl>         <dbl>
-  #  1 Afghanistan      Asia  1952  28.801  8425333  779.4453       345.612
-  #  2 Afghanistan      Asia  1957  30.332  9240934  820.8530       363.984
-  #  3 Afghanistan      Asia  1962  31.997 10267083  853.1007       383.964
-  #  4 Afghanistan      Asia  1967  34.020 11537966  836.1971       408.240
-  #  5 Afghanistan      Asia  1972  36.088 13079460  739.9811       433.056
-  #  6 Afghanistan      Asia  1977  38.438 14880372  786.1134       461.256
-  #  7 Afghanistan      Asia  1982  39.854 12881816  978.0114       478.248
-  #  8 Afghanistan      Asia  1987  40.822 13867957  852.3959       489.864
-  #  9 Afghanistan      Asia  1992  41.674 16317921  649.3414       500.088
-  # 10 Afghanistan      Asia  1997  41.763 22227415  635.3414       501.156
-  # ... with 1,694 more rows
-
-
-Now what about subsetting rows?  For this we use te `filter` command:
+Now what about subsetting rows?  For this we use the `filter` command:
 
 .. code-block :: R
 
@@ -1039,6 +1020,81 @@ Now what about subsetting rows?  For this we use te `filter` command:
   # 10 Argentina  Americas  2007  75.320 40301927 12779.380       903.840
   # ... with 365 more rows
 
+
+If we now wanted to subset by columns and rows,  we can combine `select` and `filter`
+
+.. code-block :: R
+
+    year_country_gdp_mex <- gapminder %>%
+        select(year,country,gdpPercap) %>% 
+        filter(country=="Mexico")
+    # A tibble: 12 x 3
+    #    year country gdpPercap
+    #   <int> <fct>       <dbl>
+    # 1  1952 Mexico       3478
+    # 2  1957 Mexico       4132
+    # 3  1962 Mexico       4582
+    # 4  1967 Mexico       5755
+    # 5  1972 Mexico       6809
+    # 6  1977 Mexico       7675
+    # 7  1982 Mexico       9611
+    # 8  1987 Mexico       8688
+    # 9  1992 Mexico       9472
+    #10  1997 Mexico       9767
+    #11  2002 Mexico      10742
+    #12  2007 Mexico      11978
+     
+Challenge 1
+
+Write a single command (which can span multiple lines and includes pipes) that will produce a dataframe that has the African values for `lifeExp`, `country` and `year`, but not for other Continents.  How many rows does your dataframe
+have and why?
+
+
+If we want to select all columns except 1, we can do that with the `-` operator.  
+
+.. code-block :: R
+
+  gapminder %>% select(-gdpPercap)
+  
+  # A tibble: 1,704 x 5
+  #        country continent  year lifeExp      pop 
+  #          <chr>     <chr> <int>   <dbl>    <int>              
+  #  1 Afghanistan      Asia  1952  28.801  8425333         
+  #  2 Afghanistan      Asia  1957  30.332  9240934         
+  #  3 Afghanistan      Asia  1962  31.997 10267083        
+  #  4 Afghanistan      Asia  1967  34.020 11537966         
+  #  5 Afghanistan      Asia  1972  36.088 13079460         
+  #  6 Afghanistan      Asia  1977  38.438 14880372         
+  #  7 Afghanistan      Asia  1982  39.854 12881816         
+  #  8 Afghanistan      Asia  1987  40.822 13867957         
+  #  9 Afghanistan      Asia  1992  41.674 16317921         
+  # 10 Afghanistan      Asia  1997  41.763 22227415         
+  # ... with 1,694 more rows
+
+
+
+If we want to make a new column, use `mutate`.  Don't forget we have to assign it if we want to keep the changes
+
+.. code-block :: R
+
+  gapminder <- gapminder %>% mutate(lifeExpMonths= lifeExp*12)
+  gapminder
+
+  # A tibble: 1,704 x 7
+  #        country continent  year lifeExp      pop gdpPercap lifeExpMonths 
+  #          <chr>     <chr> <int>   <dbl>    <int>     <dbl>         <dbl>     
+  #  1 Afghanistan      Asia  1952  28.801  8425333  779.4453       345.612   
+  #  2 Afghanistan      Asia  1957  30.332  9240934  820.8530       363.984   
+  #  3 Afghanistan      Asia  1962  31.997 10267083  853.1007       383.964   
+  #  4 Afghanistan      Asia  1967  34.020 11537966  836.1971       408.240   
+  #  5 Afghanistan      Asia  1972  36.088 13079460  739.9811       433.056   
+  #  6 Afghanistan      Asia  1977  38.438 14880372  786.1134       461.256   
+  #  7 Afghanistan      Asia  1982  39.854 12881816  978.0114       478.248   
+  #  8 Afghanistan      Asia  1987  40.822 13867957  852.3959       489.864   
+  #  9 Afghanistan      Asia  1992  41.674 16317921  649.3414       500.088   
+  # 10 Afghanistan      Asia  1997  41.763 22227415  635.3414       501.156   
+  # ... with 1,694 more rows
+  
 We can pipe several commands, just like with the command line:
 
 .. code-block :: R
@@ -1058,6 +1114,7 @@ We can pipe several commands, just like with the command line:
   #  9  74.340 Argentina    27134.10
   # 10  75.320 Argentina    27491.80
   # ... with 365 more rows
+
 
 We can also use outside information to help subset data.
 
