@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from misc.cyverse_sphinx_conf import *  # noqa
 
-project = 'Software Carpentry, Stanford'
+project = 'Software Carpentry, Stanford 2018'
 copyright = '2018'
 author = 'Software Carpentry'
 version = '0.1.0'
