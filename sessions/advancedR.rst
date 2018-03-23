@@ -9,10 +9,10 @@ Let's get started by making sure our working directory is correct.
 
 	getwd() # Are you in your Home directory? If so nothing needs to be done
 
-5. Loops 
+6. Loops 
 ========
 
-5.1 For loops
+6.1 For loops
 ~~~~~~~~~~~~~~
 
 Sometimes you'll want to apply the same function call to a collection of objects. For instance, say you want the avg.life expectance for each continent. To do that normally, we would do something like the following:
@@ -73,7 +73,7 @@ Let's use a different variable and see if we get the same results.
 	# [1] "The life expectancy in Africa is 23.599 to 76.442"
 	# 
 
-5.2 Nesting for loops
+6.2 Nesting for loops
 ^^^^^^^^^^^^^^^^^^^^^
 
 You can nest ``for`` loops as well!  Here for each value of ``cont`` (a.k.a each value of ``unique(gapminder$continent)``), we will also loop through each value of ``yr`` (a.k.a ``unique(gapminder$year)``).
@@ -104,13 +104,13 @@ For loops are very usefule for certain data types, but at times can become very 
 2. Don't grow objects (via ``c``, ``cbind``, etc) during the loop
 3. Allocate an object to hold the results and fill it in during the loop
 
-6. Conditionals
+7. Conditionals
 ===============
 
-6.1 If else 
+7.1 If else 
 ~~~~~~~~~~~
 
-6.1.1 If statment
+7.1.1 If statment
 ^^^^^^^^^^^^^^^^^
 
 When coding sometimes you want a particular function to be applied if a condition is true and sometimes a different function if it is not. To do this you need to use an if or if...else statement
@@ -150,7 +150,7 @@ Let's have a ``Greater than avg.`` statement returned if the value within the ``
 	# [1] "72.95 is greater than avg."
 	# [1] "75.651 is greater than avg."
 
-6.1.2 If..else statement
+7.1.2 If..else statement
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 The basic syntax is 
@@ -211,7 +211,7 @@ D. an error message
 
 2. How could you change the code so that if ``x`` is less than 0 you get a message saying ``x is less than zero``? 
 
-7. Functions
+8. Functions
 ============
 
 A functions is a piece of code written to carry out a specified task; they allow you to incorporate sets of instructions that you want to use mutliple times or, if you have a complex set of instructions, keep it together within a small program.
@@ -287,10 +287,10 @@ When we call this function, the value we input is assigned to the object `temp` 
 
 1. Create a function called ``Avg`` that calculates the average of 2 numbers. Don't forget to check your work.
 
-8. Plotting
+9. Plotting
 ===========
 
-8.1 Basic plotting
+9.1 Basic plotting
 ~~~~~~~~~~~~~~~~~~~
 
 Plotting is essential and can be done in base R
@@ -314,7 +314,7 @@ This dataset has information on plants of 3 types of irises. They've measured th
 
 Let’s make three main kinds of plot using base R—a scatterplot, a histogram, and a boxplot—then we’ll make these same plots using a R package specifically designed for making plots and figures called ggplot.
 
-8.1.1 Scatterplot
+9.1.1 Scatterplot
 ^^^^^^^^^^^^^^^^^
 
 The basic plot function is ``plot(x, y, ….)`` which x corresponding to your x-variable and y to the y-variable.
@@ -335,7 +335,7 @@ We see a scatterplot that shows there is a positive association between sepal an
 
 |plot-2|
 
-8.1.2 Histogram
+9.1.2 Histogram
 ^^^^^^^^^^^^^^^
 
 Plot will default to a scatterplot, but if you want a histogram then you need to use the type argument.
@@ -346,7 +346,7 @@ Plot will default to a scatterplot, but if you want a histogram then you need to
 
 |plot-3|
 
-8.1.3 Boxplot
+9.1.3 Boxplot
 ^^^^^^^^^^^^^
 
 To make a boxplot, you can use the function ``boxplot(x ~ y, data = dataframe)``. Let’s plot sepal length as a function of species.
@@ -371,7 +371,7 @@ Plotting in base R can be flexible and you can actually do a lot with it, but ma
 
 	plot(iris$Sepal.Length, iris$Petal.Length)
 
-8.2 ggplot2
+9.2 ggplot2
 ~~~~~~~~~~~
 
 ggplot2 works on the idea that every plot has three essential elements:
@@ -437,7 +437,7 @@ Let's try plotting the same thing but add the geom_point.
 
 Add another layer ``geom_smooth``, which allows us to add a trend line or spline to the scatter plot. 
 
-8.2.1 Histogram
+9.2.1 Histogram
 ^^^^^^^^^^^^^^^
 
 Let's instead try a histogram for Sepal Length
@@ -476,7 +476,7 @@ These histograms are stacked on each other, but what if instead we want them ind
 
 |ggplot-14|
 
-8.2.2 Scatterplots
+9.2.2 Scatterplots
 ^^^^^^^^^^^^^^^^^^
 
 We can also change the appeal and readability of plots. Let's take a look at scatterplots and how we can change things to help explore our data. First, let's try changing the color. If we give it a continuous variable, it creates a gradient.
@@ -517,7 +517,7 @@ For scatterplots, we can also assign shapes. Shapes only make sense if used with
 
 You can customize all of the colors and shapes instead of leaving it default. In the resources section, you can find information on these more advanced topics.
 
-8.2.3 Boxplot
+9.2.3 Boxplot
 ^^^^^^^^^^^^^
 
 For a basic boxplot, you can use ``geom_boxplot()``
@@ -544,7 +544,7 @@ It outlined the boxes buut say we want to fill in the boxes instead. For this, w
 
 |ggplot-26|
 
-8.2.4 Barplot
+9.2.4 Barplot
 ^^^^^^^^^^^^^
 
 There are a few additional features on barplots.  We'll start with a basic barplot.
@@ -661,14 +661,14 @@ ggplot2 makes this a little more comprehensive by adding the following:
 	
 	Pretty much anything that you would like to change can be. You can find numerous examples by googling what you want to change (e.g. google ``remove background grid ggplot``). 
 
-9. Project Management With RStudio
+10. Project Management With RStudio
 ==================================
 
 The scientific process is naturally incremental, and many projects start life as random notes, some code, then a manuscript, and eventually everything is a bit mixed together.
 
 One of the most powerful and useful aspects of RStudio is its project management functionality. We’ll be using this today to create a self-contained, reproducible project.
 
-9.1 Creating a self-contained project
+10.1 Creating a self-contained project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We’re going to create a new project in RStudio:
@@ -721,7 +721,7 @@ You can run ``head`` to make sure the data is loaded properly, ``dim`` to find o
 
 Finally save the file usign a file name ``gapminder_five_year``
 
-9.2 Rstudio and Git
+10.2 Rstudio and Git
 ~~~~~~~~~~~~~~~~~~~
 
 You have already seen version control on the shell, now let's look how git is integrated into Rstudio and how we can put the current script ``gapminder_five_year.R`` under version control. 
@@ -759,7 +759,7 @@ check Staged checkbox for ``gapminder_five_year.R`` file, click Commit and enter
 
 The rest of the steps such as creating a repository, pushing and pulling can be done from the terminal or on the shell.
 
-10. Summary
+11. Summary
 ===========
 
 - In RStudio, read in data from the pop-up menu in the Environment window (or Tools menu)
@@ -773,7 +773,7 @@ The rest of the steps such as creating a repository, pushing and pulling can be 
 - Also useful scripts to write your R code 
 - The integration of git in Rstudio helps you to put you project under version control
 
-11. Quitting R
+12. Quitting R
 ==============
 
 When you’re finished with RStudio;
