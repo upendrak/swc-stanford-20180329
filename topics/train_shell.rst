@@ -1,7 +1,7 @@
-**Training session in shell**
+**Training session in Unix Shell**
 -----------------------------
 
-In this session we will explain the various aspects of the Shell.
+In this session we will explain the various aspects of the Unix Shell.
 
 Topics
 ======
