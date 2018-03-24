@@ -21,6 +21,7 @@ Topics
 7. Loops
 
 Other Resources
+===============
 
 1. `Reference <https://eharstad.github.io/shell-novice/reference.html>`_
 
