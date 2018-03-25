@@ -129,6 +129,8 @@ We can quickly make comparisons, but we usually want to do things more sophistic
 
 .. code-block :: R
 
+  # Use the **UP** arrow to see past commands you have typed
+  
   x <- "This is an important string that we want to do analysis on"
 
 This shows up in the Environment tab in R Studio. This is very useful, because now when we want to print out this string, we can just type ``x`` into the Console.
@@ -137,8 +139,6 @@ This shows up in the Environment tab in R Studio. This is very useful, because n
 
   x
   # [1] "This is an important string that we want to do analysis on"
-
-The console is most useful for quick calculations or code chunks. But what happens when you want to remember what you coded yesterday, a year ago, or a decade ago? R won't necessarily save everything you've done forever in the Environment tab (and we wouldn't want it to!).
 
 R stores data (and everything else) as objects. New objects are created when we assign them values;
 
@@ -175,7 +175,7 @@ Before we can set the working directory, we need to know where we are on our com
 .. code-block :: R
 
   getwd()
-  # [1] "C:/Users/gaugustus/Documents/Rdocs/"
+  # [1] "/Users/lori"
 
 You can point to files from anywhere on the computer RELATIVE to your current position.  If you need to change this working directory, such as to go into the new folder, you can do so with ``setwd()``.  Let's try this. Make sure you put the path in quotes.
 
@@ -187,9 +187,8 @@ You can use tab complete in R Studio, so once you open the quotes, press tab to 
 
 .. code-block :: R
 
-  setwd("~/")
-  getwd()
-  # [1] "C:/Users/gaugustus/Documents/Rdocs/r-intro-20170825-master"
+  setwd("/Users/lori/Documents")
+  
 
 - MULTIPLE CHOICE QUESTION - 2
 
@@ -379,46 +378,67 @@ Using ``as.datatype`` (``as.logical``, ``as.character``, ``as.factor``, etc) wil
 4.2 List
 ~~~~~~~~
 
-Holds multiple of the above data types, including other lists.  surround with `list()`
-
-.. code-block :: R
-
-  mylist <- list(chars = 'c', nums = 1.4, logicals=TRUE, anotherList = list(a = 'a', b = 2))
-  class(mylist)
-  # [1] "list"
-
-.. warning :: 
-
-  Don't forget that the command ``str()`` also lists the class of each column within a data frame. It is good to use to make sure all of your data was imported correctly.
 Lists are like vectors except that you can use multiple data types.  Make a list using the ``list()`` function.
 
 .. code-block :: R
 
-  my_list <- list(1, "A", TRUE)
-  my_list
-  # [[1]]
-  # [1] 1
-  # 
-  # [[2]]
-  # [1] "A"
-  # 
-  # [[3]]
-  # [1] TRUE
+  mylist <- list(chars = 'coffee', nums = c(1.4, 5), logicals=TRUE, anotherList = list(a = 'a', b = 2))
+  mylist
+  #  $chars
+  #  [1] "coffee"
 
-We can access a value of a list by referencing the index or by using the label.
+  #  $nums
+  #  [1] 1.4 5.0
+
+  #  $logicals
+  #  [1] TRUE
+
+  #  $anotherList
+  #  $anotherList$a
+  #  [1] "a"
+
+  #  $anotherList$b
+  #  [1] 2  
+
+Holds multiple of the above data types, including other lists.
 
 .. code-block :: R
 
-  my_list[1]
-  # [[1]]
-  # [1] 1
+  class(mylist)
+  # [1] "list"
+  
+  str(mylist)  # compactly displays internal structure of R object
+  # List of 4
+  #  $ chars      : chr "coffee"
+  #  $ nums       : num [1:2] 1.4 5
+  #  $ logicals   : logi TRUE
+  #  $ anotherList:List of 2
+  #  ..$ a: chr "a"
+  #  ..$ b: num 2
+
+.. warning :: 
+
+  Don't forget that the command ``str()`` also lists the class of each column within a data frame. It is good to use to make sure all of your data was imported correctly.
+We can access a value of a list by referencing the index or by using the label preceded by the dollar sign '$'.
 
 .. code-block :: R
 
-  phonebook <- list(name="Upendra", phone="111-1111", age=27)
-  phonebook["name"]
-  # $name
-  # [1] "Gaius"
+  mylist[1]
+  # $chars
+  # [1] "coffee"
+  
+  mylist$nums
+  # [1] 1.4 5.0
+
+- EXERCISE - 2
+
+What is the difference in the returned objects? # reinforce that lists are made up of other vectors and lists 
+
+.. code-block :: R
+
+    mylist[3]
+    mylist$logicals
+
 
 
 4.3 Matrices
@@ -523,7 +543,7 @@ Data Frames are like matrices, but can hold multiple data types.
 4.5 Factors
 ~~~~~~~~~~~~
 
-Factors are very useful when running statistics, and also clog up memory less than character vectors.
+Factors are very useful when running statistics, and also clog up less memory than character vectors.
 
 They do this by storing each unique value as an integer, which takes up less space in memory than characters in a string.  Then it references that integer to the corresponding string so that it is human readable.
 
@@ -599,7 +619,7 @@ A useful command to count how many values overlap is the ``table()`` function.  
     # 1 2 0
     # 2 1 2
 
-- EXERCISE - 2
+- EXERCISE - 3
 
 1. Create the following data frame in R:
 
@@ -624,11 +644,11 @@ First, let's see how we can read in data using base R, using the ``read.csv()`` 
 
 .. code-block :: R
 
-  gapminder.base <- read.csv(file = "datasets/gapminder.txt", header=TRUE, sep = "\t", stringsAsFactors = FALSE)
+  gapminder <- read.csv(file = "datasets/gapminder.txt", header=TRUE, sep = "\t", stringsAsFactors = FALSE)
 
 After successfully reading in the data;
 
-- The environment now includes a ``gapminder.base`` object – or whatever you called the data read from file
+- The environment now includes a ``gapminder`` object – or whatever you called the data read from file
 - A copy of the data can be examined in the Excel-like data viewer – if it looks weird, find out why & fix it!
 
 **What can I do with my data?**
@@ -745,7 +765,7 @@ Other functions useful for summarizing data frames, and their columns;
   median(gapminder$li) # uses pattern-matching (but hard to debug later)
   # [1] 60.7125
 
-- EXERCISE
+- EXERCISE - 4
 
 Import the gapminder data frame again.
 
@@ -978,7 +998,7 @@ Subsetting in dplyr uses two functions:
 - ``select()``
 - ``filter()``
 
-Using select()
+## Using select()
 
 If, for example, we wanted to move forward with only a few of the variables in our dataframe we could use the `select()` function. This will subset the dataframe by columns.
 
@@ -998,7 +1018,7 @@ In this case we don't specify which data object we use in the ``select()`` funct
 
   An important difference between `dplyr` and base R is when use character strings we don't need to enclose them in quotation marks as we did above (i.e. gapminder[,'year'])
 
-Using filter()
+## Using filter()
 
 Now what about subsetting rows?  For this we use the `filter` command:
 
@@ -1047,6 +1067,12 @@ If we now wanted to subset by columns and rows,  we can combine `select` and `fi
 - Challenge 1
 
 Write a single command (which can span multiple lines and includes pipes) that will produce a dataframe that has the African values for ``lifeExp``, ``country`` and ``year``, but not for other Continents. How many rows does your dataframe have and why?
+
+## Solution to Challenge 1
+
+year_country_lifeExp_Africa <- gapminder %>% 
+                                filter(continent=="Africa") %>%
+                                select(year,country,lifeExp)
 
 If we want to select all columns except 1, we can do that with the ``-`` operator.  
 
@@ -1136,6 +1162,110 @@ We can also use outside information to help subset data.
 
 ``%in%`` will enable you to search all lines in the column country for all character strings in the two.countries file and will return a TRUE if it finds an one of them.
 
-- EXERCISE - 3
+- CHALLENGE - 2
 
-Create a new dataframe that contains only country names, years, and life expectancies of the ``gapminder`` dataset. Use this new dataframe to calculate minimum & maximum life expectancies.
+Create a new dataframe that contains the total GDP for years after 1980 for countries in Europe. 
+
+## Solution to Challenge 2
+
+EU_gdp <- gapminder %>% filter(continent == 'Europe' & year > 1980) %>% mutate(GDP = pop * gdpPercap)
+
+## Using group_by() and summarize()
+
+Now, we were supposed to be reducing the error prone repetitiveness of what can
+be done with base R, but up to now we haven't done that since we would have to
+repeat the above for each continent. Instead of `filter()`, which will only pass
+observations that meet your criteria (in the above: `continent=="Africa"`), we
+can use `group_by()`, which will essentially use every unique criteria that you
+could have used in filter.
+
+
+.. code-block :: R
+
+    str(gapminder)
+
+    #'data.frame':	1704 obs. of  6 variables:
+    # $ country  : Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
+    # $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+    # $ pop      : num  8425333 9240934 10267083 11537966 13079460 ...
+    # $ continent: Factor w/ 5 levels "Africa","Americas",..: 3 3 3 3 3 3 3 3 3 3 ...
+    #$ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+    #$ gdpPercap: num  779 821 853 836 740 ...
+
+    str(gapminder %>% group_by(continent))
+
+    #Classes 'grouped_df', 'tbl_df', 'tbl' and 'data.frame':	1704 obs. of  6 variables:
+    #$ country  : Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
+    #$ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+    #$ pop      : num  8425333 9240934 10267083 11537966 13079460 ...
+    #$ continent: Factor w/ 5 levels "Africa","Americas",..: 3 3 3 3 3 3 3 3 3 3 ...
+    #$ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+    #$ gdpPercap: num  779 821 853 836 740 ...
+    #- attr(*, "vars")= chr "continent"
+    #- attr(*, "drop")= logi TRUE
+    #- attr(*, "indices")=List of 5
+    #..$ : int  24 25 26 27 28 29 30 31 32 33 ...
+    #..$ : int  48 49 50 51 52 53 54 55 56 57 ...
+    #..$ : int  0 1 2 3 4 5 6 7 8 9 ...
+    #..$ : int  12 13 14 15 16 17 18 19 20 21 ...
+    #..$ : int  60 61 62 63 64 65 66 67 68 69 ...
+    #- attr(*, "group_sizes")= int  624 300 396 360 24
+    #- attr(*, "biggest_group_size")= int 624
+    #- attr(*, "labels")='data.frame':	5 obs. of  1 variable:
+    #..$ continent: Factor w/ 5 levels "Africa","Americas",..: 1 2 3 4 5
+    #..- attr(*, "vars")= chr "continent"
+    #..- attr(*, "drop")= logi TRUE
+
+
+You will notice that the structure of the dataframe where we used `group_by()`
+(`grouped_df`) is not the same as the original `gapminder` (`data.frame`). A
+`grouped_df` can be thought of as a `list` where each item in the `list`is a
+`data.frame` which contains only the rows that correspond to the a particular
+value `continent` (at least in the example above).
+
+
+## Using summarize()
+
+The above was a bit on the uneventful side but `group_by()` is much more
+exciting in conjunction with `summarize()`. This will allow us to create new
+variable(s) by using functions that repeat for each of the continent-specific
+data frames. That is to say, using the `group_by()` function, we split our
+original dataframe into multiple pieces, then we can run functions
+(e.g. `mean()` or `sd()`) within `summarize()`.
+
+
+.. code-block :: R
+
+    gdp_bycontinents <- gapminder %>%
+        group_by(continent) %>%
+        summarize(mean_gdpPercap=mean(gdpPercap))
+
+    #continent mean_gdpPercap
+    #     <fctr>          <dbl>
+    #1    Africa       2193.755
+    #2  Americas       7136.110
+    #3      Asia       7902.150
+    #4    Europe      14469.476
+    #5   Oceania      18621.609
+
+That allowed us to calculate the mean gdpPercap for each continent, but it gets
+even better.
+
+- CHALLENGE - 3
+
+Calculate the average life expectancy per country. Which has the longest average life expectancy and which has the shortest average life expectancy?
+
+## Solution to Challenge 3
+
+lifeExp_bycountry <- gapminder %>%
+    group_by(country) %>%
+    summarize(mean_lifeExp=mean(lifeExp))
+lifeExp_bycountry %>%
+    filter(mean_lifeExp == min(mean_lifeExp) | mean_lifeExp == max(mean_lifeExp))
+
+# A tibble: 2 x 2
+#  country      mean_lifeExp
+#  <fct>               <dbl>
+#1 Iceland              76.5
+#2 Sierra Leone         36.8
+
