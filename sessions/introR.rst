@@ -642,9 +642,17 @@ A useful command to count how many values overlap is the ``table()`` function.  
 
 First, let's see how we can read in data using base R, using the ``read.csv()`` command:
 
+Download the file first
+
 .. code-block :: R
 
-  gapminder <- read.csv(file = "datasets/gapminder.txt", header=TRUE, sep = "\t", stringsAsFactors = FALSE)
+  download.file("https://raw.githubusercontent.com/upendrak/intro-r-20170825/master/datasets/gapminder_backup.txt" "gapminder.txt")
+
+This will download the file into your current working directory but this is not in your R environment. Now let's read the file into R environment
+
+.. code-block :: R
+
+  gapminder <- read.csv(file = "gapminder.txt", header=TRUE, sep = "\t", stringsAsFactors = FALSE)
 
 After successfully reading in the data;
 
