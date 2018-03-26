@@ -14,11 +14,11 @@ Topics
 
 4. Pipes and Filters
 
-5. Loops
+5. Finding things
 
-6. Shell Scripts
+6. Loops
 
-7. Loops
+7. Shell Scripts
 
 Other Resources
 ===============
