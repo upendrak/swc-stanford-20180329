@@ -305,7 +305,7 @@ Are equal to either ``TRUE`` or ``FALSE`` in all caps
   # [1] "logical"
 
 
-4 Data Structures
+4. Data Structures
 =================
 
 4.1 Atomic Vector

@@ -30,43 +30,45 @@ Topics
 
   3.4 Complex
 
-  3.5 Logical
+  3.5 Logical  
 
-  3.6 List
+4. Data Structures
+	
+  4.1 Atomic Vector
+  
+  4.2 List
 
-  3.7 Data Structures
+  4.3 Matrices
 
-  3.8 Matrices
+  4.4 Data Frames
 
-  3.9 Data Frames
+  4.5 Factors
 
-  3.10 Factors
+5. Reading in Data
 
-4. Reading in Data
+  5.1 Subsetting
 
-  4.1 Subsetting
+    5.1.1 Base R
 
-    4.1.1 Base R
+    5.1.2 Dplyr
 
-    4.1.2 Dplyr
+6. Loops
 
-5. Loops
+  6.1 Nested for loops
 
-  5.1 Nested for loops
+7. Conditionals
 
-6. Conditionals
+  7.1 If else
 
-  6.1 If else
+	7.1.1 If statement
 
-	6.1.1 If statement
+	7.1.2 If..else statement
 
-	6.1.2 If..else statement
+8. Functions
 
-7. Functions
+9. Plotting
 
-8. Plotting
-
-  8.1 Basic plotting
+  9.1 Basic plotting
 
 	8.1.1 Scatterplot
 
@@ -74,23 +76,23 @@ Topics
 
 	8.1.3 Boxplot
 
-8.2 ggplot2
+9.2 ggplot2
 
-	8.2.1 Histogram
+	9.2.1 Histogram
 
-	8.2.2 Scatterplot
+	9.2.2 Scatterplot
 
-	8.2.3 Boxplot
+	9.2.3 Boxplot
 
-	8.2.4 Barplot
+	9.2.4 Barplot
 
-9. Project Management with Rstudio
+10. Project Management with Rstudio
 
-	9.1 Creating a self-contained project
+	10.1 Creating a self-contained project
 
-	9.2 Rstudio and Git
+	10.2 Rstudio and Git
 
-10. Quitting R
+11. Quitting R
 
-11. References
+12. References
 
