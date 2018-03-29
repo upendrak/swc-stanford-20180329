@@ -10,8 +10,6 @@ The ``shell`` is a process – it happens to be one that can see its own OS, whi
 
 The ``Unix shell`` has been around longer than most of its users have been alive. It has survived so long because it's a power tool that allows people to do complex things with just a few keystrokes. More importantly, it helps them combine existing programs in new ways and automate repetitive tasks so that they don't have to type the same things over and over again
 
-The part of the operating system responsible for managing files and directories is called the file system. It organizes our data into files, which hold information, and directories (also called "folders"), which hold files or other directories.
-
 2. Files and Directories
 ========================
 
@@ -23,7 +21,7 @@ Several commands are frequently used to create, inspect, rename, and delete file
 
 The dollar sign is a prompt, which shows us that the shell is waiting for input; your shell may show something more elaborate.
 
-Type the command ``whoami``, then press the Enter key (sometimes marked Return) to send the command to the shell. The command's output is the ID of the current user, i.e., it shows us who the shell thinks we are:
+Type the command ``whoami``, then press the Enter key (sometimes marked Return) to send the command to the shell. The command's output is the ID of the current user, i.e., it shows us who the shell thinks you are:
 
 .. code-block :: bash
 
@@ -46,9 +44,9 @@ Next, let's find out where we are by running a command called ``pwd`` (which sta
 
 Here, the computer's response is ``/Users/upendra_35``, which is my "home directory"
 
-To understand what a "home directory" is, let's have a look at how the file system as a whole is organized. At the top is the ``root`` directory that holds everything else. We refer to it using a slash character ``/`` on its own;
+To understand what a "home directory" is, let's have a look at how the ``file system`` as a whole is organized. The part of the operating system responsible for managing files and directories is called the ``file system``. It organizes our data into files, which hold information, and directories (also called "folders"), which hold files or other directories. 
 
-Inside that directory are several other directories: ``bin`` (which is where some built-in programs are stored), ``data`` (for miscellaneous data files), ``Users`` (where users' personal directories are located), ``tmp`` (for temporary files that don't need to be stored long-term), and so on:
+At the top is the ``root`` directory that holds everything else. We refer to it using a slash character ``/`` on its own. Inside that directory are several other directories: ``bin`` (which is where some built-in programs are stored), ``data`` (for miscellaneous data files), ``Users`` (where users' personal directories are located), ``tmp`` (for temporary files that don't need to be stored long-term), and so on:
 
 |file_system|
 
@@ -91,19 +89,19 @@ Let's see what's in Nelle's home directory by running ``ls``:
 	$ ls -F
 	Desktop/		data/			north-pacific-gyre/	pizza.cfg		writing/	creatures/		molecules/		notes.txt		solar.pdf
 
-Here, we can see that ``/users/nelle`` contains six sub-directories. The names that don't have trailing slashes, like ``notes.txt``, ``pizza.cfg``, and ``solar.pdf``, are plain files. And note that there is a space between ``ls`` and ``-F``: without it, the shell thinks we're trying to run a command called ``ls-F``, which doesn't exist.
+Here, we can see that ``/users/nelle`` contains six sub-directories. The names that don't have trailing slashes, like ``notes.txt``, ``pizza.cfg``, and ``solar.pdf``, are plain files. And note that there is a space between ``ls`` and ``-F``, without it, the shell thinks we're trying to run a command called ``ls-F``, which doesn't exist.
 
 |file_system3|
 
 .. Note ::
 
-	You may have noticed that all of Nelle's files' names are "something dot something". This is just a convention: we can call a file mythesis or almost anything else we want. However, most people use two-part names most of the time to help them (and their programs) tell different kinds of files apart. The second part of such a name is called the filename extension, and indicates what type of data the file holds: ``.txt`` signals a plain text file, ``.pdf`` indicates a PDF document, ``.cfg`` is a configuration file full of parameters for some program or other, and so on.
+	You may have noticed that all of Nelle's files' names are "something dot something". This is just a convention: we can call a file ``mythesis`` or almost anything else we want. However, most people use two-part names most of the time to help them (and their programs) tell different kinds of files apart. The second part of such a name is called the filename extension, and indicates what type of data the file holds: ``.txt`` signals a plain text file, ``.pdf`` indicates a PDF document, ``.cfg`` is a configuration file full of parameters for some program or other, and so on.
 
 	This is just a convention, albeit an important one. Files contain bytes: it's up to us and our programs to interpret those bytes according to the rules for PDF documents, images, and so on.
 
 	Naming a PNG image of a whale as ``whale.mp3`` doesn't somehow magically turn it into a recording of whalesong, though it might cause the operating system to try to open it with a music player when someone double-clicks it.
 
-Now let's take a look at what's in Nelle's data directory by running ``ls -F data``, i.e., the command ls with the arguments ``-F`` and ``data``. The second argument --- the one without a leading dash --- tells ls that we want a listing of something other than our current working directory:
+Now let's take a look at what's in Nelle's data directory by running ``ls -F data``, i.e., the command ``ls`` with the arguments ``-F`` and ``data``. The second argument --- the one without a leading dash --- tells ls that we want a listing of something other than our current working directory:
 
 .. code-block :: bash
 
@@ -131,13 +129,13 @@ The leading ``/`` tells the computer to follow the path from the root of the fil
 
 What if we want to change our current working directory? 
 
-We can use ``cd`` followed by a directory name to change our working directory. ``cd`` stands for "change directory", which is a bit misleading: the command doesn't change the directory, it changes the shell's idea of what directory we are in.
+We can use ``cd`` command followed by a directory name to change our working directory. ``cd`` stands for "change directory", which is a bit misleading: the command doesn't change the directory, it changes the shell's idea of what directory we are in.
 
 .. code-block :: bash
 
 	$ cd data
 
-``cd`` doesn't print anything, but if we run ``pwd`` after it, we can see that we are now in ``/Users/upendra_35/filesystem/users/nelle/data``. If we run ``ls`` without arguments now, it lists the contents of ``/Users/upendra_35/filesystem/users/nelle/data``, because that's where we now are:
+``cd`` doesn't print anything, but if we run ``pwd`` after it, we can see that we are now in ``/Users/upendra_35/filesystem/users/nelle/data``. If we run ``ls -F`` without arguments now, it lists the contents of ``/Users/upendra_35/filesystem/users/nelle/data``, because that's where we now are:
 
 .. code-block :: bash
 
@@ -172,7 +170,7 @@ or a relative path:
 
 The special directory ``..`` doesn't usually show up when we run ``ls``. If we want to display it, we can give ls the ``-a`` flag:
 
-``-a`` stands for "show all"; it forces ls to show us file and directory names that begin with `.`, such as ``..`` (which, if we're in ``/Users/upendra_35/filesystem/users/nelle``, refers to the ``/Users`` directory). As you can see, it also displays another special directory that's just called ``.``, which means "the current working directory". It may seem redundant to have a name for it, but we'll see some uses for it soon.
+``-a`` stands for "show all"; it forces ``ls`` to show us file and directory names that begin with `.`, such as ``..`` (which, if we're in ``/Users/upendra_35/filesystem/users/nelle``, refers to the ``/Users`` directory). As you can see, it also displays another special directory that's just called ``.``, which means "the current working directory". It may seem redundant to have a name for it, but we'll see some uses for it soon.
 
 .. code-block :: bash
 
@@ -267,7 +265,7 @@ However, there's nothing in it yet:
 
 .. code-block :: bash
 
-	$ ls -F thesis
+	$ ls thesis
 
 There are several ways to create a file but one of the simplest ways to create an empty file is via the ``touch`` command. Change the working directory to ``thesis`` using ``cd``, then touch an empty file called ``draft.txt``:
 
@@ -296,7 +294,7 @@ Another way to create a file is to run a text editor called ``Nano`` to create a
 
 	No matter what editor you use, you will need to know where it searches for and saves files. If you start it from the shell, it will (probably) use your current working directory as its default location. If you use your computer's start menu, it may want to save files in your desktop or documents directory instead. You can change this by navigating to another directory the first time you "Save As..."
 
-Let's type in a few lines of text, then use Control-X to write our data to disk and exit it:
+Let's type in a few lines of text, then use Control-X to save our data to disk and Enter to exit it:
 
 |nano_1|
 
@@ -351,7 +349,7 @@ This little safety feature can save you a lot of grief, particularly if you are 
 
 	$ rm thesis/draft.txt
 
-The directory is now empty, so rmdir can delete it:
+The directory is now empty, so ``rmdir`` can delete it:
 
 .. code-block :: bash
 
@@ -390,7 +388,7 @@ The first parameter tells ``mv`` what we're "moving", while the second is where 
 
 Just for the sake of inconsistency, ``mv`` also works on directories --- there is no separate ``mvdir`` command.
 
-Let's move ``quotes.txt`` into the current working directory. We use ``mv`` once again, but this time we'll just use the name of a directory as the second parameter to tell mv that we want to keep the filename, but put the file somewhere new. (This is why the command is called "move".) In this case, the directory name we use is the special directory name ``.`` that we mentioned earlier.
+Let's move ``quotes.txt`` into the current working directory. We use ``mv`` once again, but this time we'll just use the name of a directory as the second parameter to tell ``mv`` that we want to keep the filename, but put the file somewhere new. (This is why the command is called "move".) In this case, the directory name we use is the special directory name ``.`` that we mentioned earlier.
 
 .. code-block :: bash
 
@@ -423,7 +421,7 @@ This time it tells us that it can't find ``quotes.txt`` in the current directory
 
 - Exercise
 
-1. Suppose that you created a ``.txt`` file in your current directory to contain a list of the statistical tests you will need to do to analyze your data, and named it: ``statstics.txt``
+1. Suppose that you created a ``.txt`` file in your current working directory to contain a list of the statistical tests you will need to do to analyze your data, and named it: ``statstics.txt``
 
 After creating and saving this file you realize you misspelled the filename! You want to correct the mistake, which of the following commands could you use to do so?
 
@@ -432,7 +430,7 @@ After creating and saving this file you realize you misspelled the filename! You
 3. ``mv statstics.txt .``
 4. ``cp statstics.txt .``
 
-2. What is the output of the closing ls command in the sequence shown below?
+2. What is the output of the closing ``ls`` command in the sequence shown below?
 
 .. code-block :: bash
 
@@ -453,7 +451,7 @@ After creating and saving this file you realize you misspelled the filename! You
 4. Pipes and Filters
 ====================
 
-Now that we know a few basic commands, we can finally look at the shell's most powerful feature: the ease with which it lets us combine existing programs in new ways. We'll start with a directory called ``molecules`` that contains six files describing some simple organic molecules. The ``.pdb`` extension indicates that these files are in Protein Data Bank format, a simple text format that specifies the type and position of each atom in the molecule.
+Now that we know a few basic commands, we can finally look at the shell's most powerful feature *pipe* which lets us combine existing programs in new ways. We'll start with a directory called ``molecules`` that contains six files describing some simple organic molecules. The ``.pdb`` extension indicates that these files are in Protein Data Bank format, a simple text format that specifies the type and position of each atom in the molecule.
 
 .. code-block :: bash
 
@@ -477,13 +475,13 @@ Let's ``cd`` into that directory and run the command ``wc *.pdb``. ``wc`` is the
 
 	Wildcards:
 
-	``*`` is a wildcard. It matches zero or more characters, so ``*.pdb`` matches ethane.pdb, propane.pdb, and so on. On the other hand, ``p*.pdb`` only matches pentane.pdb and ``propane.pdb``, because the 'p' at the front only matches itself.
+	``*`` is a wildcard. It matches zero or more characters, so ``*.pdb`` matches ethane.pdb, propane.pdb, and so on. On the other hand, ``p*.pdb`` only matches ``pentane.pdb`` and ``propane.pdb``, because the ``p`` at the front only matches itself.
 
 	``?`` is also a wildcard, but it only matches a single character. This means that ``p?.pdb`` matches ``pi.pdb`` or ``p5.pdb``, but not ``propane.pdb``. We can use any number of wildcards at a time: for example, ``p*.p?*`` matches anything that starts with a ``p`` and ends with ``.``, ``p``, and at least one more character (since the ``?`` has to match one character, and the final ``*`` can match any number of characters). Thus, ``p*.p?*`` would match preferred.practice, and even ``p.pi`` (since the first ``*`` can match no characters at all), but not quality.practice (doesn't start with ``p``) or preferred.p (there isn't at least one character after the ``.p``).
 
-	When the shell sees a wildcard, it expands the wildcard to create a list of matching filenames before running the command that was asked for. As an exception, if a wildcard expression does not match any file, Bash will pass the expression as a parameter to the command as it is. For example typing ``ls *.pdf`` in the molecules directory (which contains only files with names ending with .pdb) results in an error message that there is no file called *.pdf. However, generally commands like wc and ls see the lists of file names matching these expressions, but not the wildcards themselves. It is the shell, not the other programs, that deals with expanding wildcards, and this another example of orthogonal design.
+	When the shell sees a wildcard, it expands the wildcard to create a list of matching filenames before running the command that was asked for. As an exception, if a wildcard expression does not match any file, Bash will pass the expression as a parameter to the command as it is. For example typing ``ls *.pdf`` in the molecules directory (which contains only files with names ending with .pdb) results in an error message that there is no file called *.pdf. However, generally commands like ``wc`` and ``ls`` see the lists of file names matching these expressions, but not the wildcards themselves. It is the shell, not the other programs, that deals with expanding wildcards, and this another example of orthogonal design.
 
-If we run wc -l instead of just wc, the output shows only the number of lines per file:
+If we run ``wc -l`` instead of just ``wc``, the output shows only the number of lines per file:
 
 .. code-block :: bash
 
@@ -504,9 +502,9 @@ Which of these files is shortest? It's an easy question to answer when there are
 
 	$ wc -l *.pdb > lengths.txt
 
-The greater than symbol, ``>``, tells the shell to redirect the command's output to a file instead of printing it to the screen. The shell will create the file if it doesn't exist, or overwrite the contents of that file if it does. (This is why there is no screen output: everything that wc would have printed has gone into the file ``lengths.txt`` instead.)
+The greater than symbol, ``>``, tells the shell to redirect the command's output to a file instead of printing it to the screen. The shell will create the file if it doesn't exist, or overwrite the contents of that file if it does. (This is why there is no screen output: everything that ``wc`` would have printed has gone into the file ``lengths.txt`` instead.)
 
-We can now send the content of lengths.txt to the screen using ``cat lengths.txt``. cat stands for "concatenate": it prints the contents of files one after another. There's only one file in this case, so ``cat`` just shows us what it contains:
+We can now send the content of ``lengths.txt`` to the screen using ``cat lengths.txt``. ``cat`` stands for "concatenate": it prints the contents of files one after another. There's only one file in this case, so ``cat`` just shows us what it contains:
 
 .. code-block :: bash
 
@@ -519,7 +517,7 @@ We can now send the content of lengths.txt to the screen using ``cat lengths.txt
 	15  propane.pdb
 	107  total
 
-Now let's use the ``sort`` command to sort its contents. We will also use the ``-n`` flag to specify that the sort is numerical instead of alphabetical. This does not change the file; instead, it sends the sorted result to the screen:
+Now let's use the ``sort`` command to sort its contents. We will also use the ``-n`` flag to specify that the sort is **numerical** instead of **alphabetical**. This does not change the file; instead, it sends the sorted result to the screen:
 
 .. code-block :: bash
 
@@ -550,7 +548,7 @@ Instead of creating an intermediate file ``lengths.txt`` we can use another pipe
 
 1. What does ``sort -n`` do?
 
-If we run sort on this file:
+If we run ``sort`` on this file:
 
 .. code-block :: bash
 
@@ -580,9 +578,9 @@ If we run ``sort -n`` on the same input, we get this instead:
 	19
 	22
 
-2. Explain why ``-n`` has this effect.
+Explain why ``-n`` has this effect.
 
-In our current directory, we want to find the 3 files which have the least number of lines. Which command listed below would work?
+2. In our current directory, we want to find the 3 files which have the least number of lines. Which command listed below would work?
 
 1. ``wc -l * > sort -n > head -3``
 2. ``wc -l * | sort -n | head 1-3``
@@ -628,11 +626,10 @@ Why do you think ``uniq`` only removes *adjacent* duplicated lines? (Hint: think
 
 You can guess someone's age by how they talk about search: young people use "Google" as a verb, while crusty old Unix programmers use ``grep``. The word is a contraction of "global/regular expression/print", a common sequence of operations in early Unix text editors. It is also the name of a very useful command-line program.
 
-``grep`` finds and prints lines in files that match a pattern. For our examples, we will use a file that contains three haikus taken from a 1998 competition in Salon magazine. For this set of examples we're going to be working in the writing subdirectory:
+``grep`` finds and prints lines in files that match a pattern. For our examples, we will use a file that contains three haikus taken from a 1998 competition in Salon magazine. For this set of examples we're going to be working in the ``writing`` subdirectory:
 
 .. code-block :: bash
 
-	$ cd
 	$ cd writing
 	$ cat haiku.txt
 	The Tao that is seen
@@ -651,7 +648,7 @@ Let's find lines that contain the word "not":
 
 .. code-block :: bash
 
-	$ grep not haiku.txt
+	$ grep "not" haiku.txt
 	Is not the true Tao, until
 	"My Thesis" not found
 	Today it is not working
@@ -662,7 +659,7 @@ Let's try a different pattern: "day".
 
 .. code-block :: bash
 
-	$ grep day haiku.txt
+	$ grep "day" haiku.txt
 	Yesterday it worked
 	Today it is not working
 
@@ -704,14 +701,12 @@ We can combine flags as we do with other Unix commands. For example, since ``-i`
 
 .. code-block :: bash
 
-	$ grep '^.o' haiku.txt
+	$ grep "^.o" haiku.txt
 	You bring fresh toner.
 	Today it is not working
 	Software is like that.
 
 The ``^`` in the pattern anchors the match to the start of the line. The ``.`` matches a single character (just like ``?`` in the shell), while the ``o`` matches an actual ``o`` letter.
-
-While ``grep`` finds lines in files, the ``find`` command finds files themselves. Again, it has a lot of options; to show how the simplest ones work, we'll use the directory tree shown below.
 
 - Exercise
 
@@ -725,7 +720,7 @@ While ``grep`` finds lines in files, the ``find`` command finds files themselves
 6. Loops
 ========
 
-Wildcards and tab completion are two ways to reduce typing (and typing mistakes). Another is to tell the shell to do something over and over again. Suppose we have several hundred genome data files named ``basilisk.dat``, ``unicorn.dat``, and so on. In this example, we'll use the creatures directory which only has two example files, but the principles can be applied to many many more files at once. We would like to modify these files, but also save a version of the original files and rename them as ``original-basilisk.dat`` and ``original-unicorn.dat``. We can't use:
+Wildcards and tab completion are two ways to reduce typing (and typing mistakes). Another is to tell the shell to do something over and over again. Suppose we have several hundred genome data files named ``basilisk.dat``, ``unicorn.dat``, and so on. In this example, we'll use the ``creatures`` directory which only has two example files, but the principles can be applied to many many more files at once. We would like to modify these files, but also save a version of the original files and rename them as ``original-basilisk.dat`` and ``original-unicorn.dat``. We can't use:
 
 .. code-block :: bash
 
@@ -744,16 +739,22 @@ Instead, we can use a loop to do some operation once for each thing in a list. H
 
 .. code-block :: bash
 
-	$ for filename in basilisk.dat unicorn.dat
+	$ for filename in *.dat
 	  do 
 	  	head -3 $filename
 	  done
+	COMMON NAME: basilisk
+	CLASSIFICATION: basiliscus vulgaris
+	UPDATED: 1745-05-02
+	COMMON NAME: unicorn
+	CLASSIFICATION: equus monoceros
+	UPDATED: 1738-11-24
 
 When the shell sees the keyword ``for``, it knows it is supposed to repeat a command (or group of commands) once for each thing in a list. In this case, the list is the two filenames. Each time through the loop, the name of the thing currently being operated on is assigned to the variable called ``filename``. Inside the loop, we get the variable's value by putting ``$`` in front of it: ``$filename`` is ``basilisk.dat`` the first time through the loop, ``unicorn.dat`` the second, and so on.
 
 By using the dollar sign we are telling the shell interpreter to treat ``filename`` as a variable name and substitute its value on its place, but not as some text or external command. When using variables it is also possible to put the names into curly braces to clearly delimit the variable name: ``$filename`` is equivalent to ``${filename}``, but is different from ``${file}name``. You may find this notation in other people's programs.
 
-Finally, the command that's actually being run is our old friend head, so this loop prints out the first three lines of each data file in turn.
+Finally, the command that's actually being run is our old friend ``head``, so this loop prints out the first three lines of each data file in turn.
 
 Here's a slightly more complicated loop:
 
@@ -762,22 +763,32 @@ Here's a slightly more complicated loop:
 	$ for filename in *.dat
 	  do
 		echo $filename
-		head -n 10 $filename | tail -n 3
+		head -n 10 ${filename} | tail -n 3
 	  done
+	  basilisk.dat
+	  CCGCACCTCT
+	  CCTATCTACA
+	  TGTTTGTCTC
+	  unicorn.dat
+	  CCGAACATAA
+	  ACGCTTTAAC
+	  GTCCCTCCAG
 
-Going back to our original file renaming problem, we can solve it using this loop:
+Here it grabs the first 10 lines of the files and then show the last 3 rows.
+
+Now going back to our original file renaming problem, we can solve it using this loop:
 
 .. code-block :: bash
 
 	$ for filename in *.dat
 	  do
-	  	echo $filename
+	  	echo $filename original-$filename
 	  	mv $filename original-$filename
 	  done
-	basilisk.dat
-	unicorn.da
+	basilisk.dat original-basilisk.dat
+	unicorn.dat original-unicorn.dat
 
-This loop runs the ``mv`` command once for each filename. The first time, when ``$filename`` expands to basilisk.dat, the shell executes:
+This loop runs the ``mv`` command once for each filename. The first time, when ``$filename`` expands to ``basilisk.dat``, the shell executes:
 
 .. code-block :: bash
 
@@ -827,6 +838,7 @@ Let's start by going back to ``molecules/`` direcotry and create a file called `
 .. code-block :: bash
 
 	$ nano middle.sh
+	head -15 octane.pdb | tail -5
 
 Once we have saved the file, we can ask the shell to execute the commands it contains. Our shell is called ``bash``, so we run the following command:
 
@@ -852,6 +864,8 @@ Inside a shell script, ``$1`` means "the first filename (or other parameter) on 
 .. code-block :: bash
 
 	$ bash middle.sh octane.pdb
+
+We get the same output as earlier
 
 We can still edit ``middle.sh`` to adjust the range of lines, though. Let's fix that by using the special variables ``$2`` and ``$3``:
 
@@ -883,7 +897,7 @@ What if we want to process many files in a single pipeline? For example, if we w
 
 	$ wc -l *.pdb | sort -n
 
-because ``wc -l`` lists the number of lines in the files (recall that wc stands for 'word count', adding the -l flag means 'count lines' instead) and ``sort -n`` sorts things numerically. We could put this in a file, but then it would only ever sort a list of ``.pdb`` files in the current directory. If we want to be able to get a sorted list of other kinds of files, we need a way to get all those names into the script. We can't use ``$1``, ``$2``, and so on because we don't know how many files there are. Instead, we use the special variable ``$@``, which means, "All of the command-line parameters to the shell script." We also should put ``$@`` inside double-quotes to handle the case of parameters containing spaces ("$@" is equivalent to "$1" "$2" ...) Here's an example:
+because ``wc -l`` lists the number of lines in the files (recall that wc stands for 'word count', adding the ``-l`` flag means 'count lines' instead) and ``sort -n`` sorts things numerically. We could put this in a file, but then it would only ever sort a list of ``.pdb`` files in the current directory. If we want to be able to get a sorted list of other kinds of files, we need a way to get all those names into the script. We can't use ``$1``, ``$2``, and so on because we don't know how many files there are. Instead, we use the special variable ``$@``, which means, "All of the command-line parameters to the shell script." We also should put ``$@`` inside double-quotes to handle the case of parameters containing spaces ("$@" is equivalent to "$1" "$2" ...) Here's an example:
 
 .. code-block :: bash
 
