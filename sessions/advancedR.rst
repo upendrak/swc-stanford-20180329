@@ -19,24 +19,25 @@ Sometimes you'll want to apply the same function call to a collection of objects
 
 .. code-block :: R
 
-	cont <- "Africa"
-	life.min <- gapminder %>% filter(continent == cont) %>% select(lifeExp) %>% min()
-	life.max <- gapminder %>% filter(continent == cont) %>% select(lifeExp) %>% max()
-	print(paste0('The life expectancy in ',cont,' is ',life.min,' to ',life.max))
+	unique(gapminder$continent)
+
+	cont <- "Asia"
+	res <- gapminder %>% filter(continent == cont) %>% summarise(avg = mean(lifeExp))
+	print(paste0("The avg life expentency of ", cont, " is: ", res))
+
+	cont <- "Europe"
+	res <- gapminder %>% filter(continent == cont) %>% summarise(avg = mean(lifeExp))
+	paste0("The avg life expentency of ", cont, " is: ", res)
 
 And we would have to run these three lines of code for each continent.
 
 We can have R do this automatically for us for a collection of objects.  Here, the collection of objects is the list of continents.
 
-.. Note :: 
-
-	The dplyr way creates a data.frame whereas the base R way creates a vector.
-
 We can loop through these one at a time and do the same thing as before, using the following syntax:
 
 .. code-block :: R
 
-	for(placeholder in collectionOfObjects)
+	for (placeholder in collectionOfObjects)
 	{
      	DoSomeTask
 	}
@@ -45,15 +46,15 @@ Below, ``cont`` is your placeholder. We could put anything in this placeholder t
 
 .. code-block :: R
 
-	for(cont in unique(gapminder$continent))
-	{
-	     life.min <- min(gapminder[gapminder$continent == cont, 'lifeExp'])
-	     life.max <- max(gapminder[gapminder$continent == cont, 'lifeExp'])
-	     print(paste0('The life expectancy in ',cont,' is ',life.min,' to ',life.max))
+	for (cont in unique(gapminder$continent)) {
+	  res <- gapminder %>% filter(continent == cont) %>% summarise(avg = mean(lifeExp))
+	  print(paste0("The avg life expentency of ", cont, " is: ", res))
 	}
-	# [1] "The life expectancy in Asia is 28.801 to 82.603"
-	# [1] "The life expectancy in Europe is 43.585 to 81.757"
-	# [1] "The life expectancy in Africa is 23.599 to 76.442"  
+	[1] "The avg life expentency of Asia is: 60.0649032323232"
+	[1] "The avg life expentency of Europe is: 71.9036861111111"
+	[1] "The avg life expentency of Africa is: 48.8653301282051"
+	[1] "The avg life expentency of Americas is: 64.6587366666667"
+	[1] "The avg life expentency of Oceania is: 74.3262083333333"
 
 Here we are taking each element in ``unique(gapminder$continent)`` and sequentially assigning it to the variable cont (which is completely arbitrary; it could easibly be continent, cont, x, y, z). The variable ``cont`` is then used in the code to perform a function.
 
@@ -61,40 +62,43 @@ Let's use a different variable and see if we get the same results.
 
 .. code-block :: R
 
-	for(blah in unique(gapminder$continent))
-	{
-	     life.min <- min(gapminder[gapminder$continent == blah, 'lifeExp'])
-	     life.max <- max(gapminder[gapminder$continent == blah, 'lifeExp'])
-	     print(paste0('The life expectancy in ',blah,' is ',life.min,' to ',life.max))
+	for (blash in unique(gapminder$continent)) {
+	  res <- gapminder %>% filter(continent == blah) %>% summarise(avg = mean(lifeExp))
+	  print(paste0("The avg life expentency of ", blah, " is: ", res))
 	}
-
-	# [1] "The life expectancy in Asia is 28.801 to 82.603"
-	# [1] "The life expectancy in Europe is 43.585 to 81.757"
-	# [1] "The life expectancy in Africa is 23.599 to 76.442"
-	# 
+	[1] "The avg life expentency of Asia is: 60.0649032323232"
+	[1] "The avg life expentency of Europe is: 71.9036861111111"
+	[1] "The avg life expentency of Africa is: 48.8653301282051"
+	[1] "The avg life expentency of Americas is: 64.6587366666667"
+	[1] "The avg life expentency of Oceania is: 74.3262083333333"
 
 6.2 Nesting for loops
 ^^^^^^^^^^^^^^^^^^^^^
 
-You can nest ``for`` loops as well!  Here for each value of ``cont`` (a.k.a each value of ``unique(gapminder$continent)``), we will also loop through each value of ``yr`` (a.k.a ``unique(gapminder$year)``).
+You can nest ``for`` loops as well!  Here for each value of ``cont`` (a.k.a each value of ``unique(gapminder$continent)``), we will also loop through each value of ``yr`` (a.k.a ``unique(gapminder$year)``). But for now we will use 2 years instead of all years..
 
 .. code-block :: R
 
-	for(cont in unique(gapminder$continent)){
-	     for(yr in unique(gapminder$year)){
-	          life.min <- min(gapminder[gapminder$continent == cont & gapminder$year == yr,
-	                                    'lifeExp'])
-	          life.max <- max(gapminder[gapminder$continent == cont & gapminder$year == yr,
-	                                    'lifeExp'])
-	          print(paste0('The life expectancy in ',yr,' in ',cont,' is ',
-	                       life.min,' to ',life.max))
-	     }
+	unique(gapminder$year)
+
+	yr <- c("1952", "1957")
+
+	for (cont in unique(gapminder$continent)) {
+	  for (y in yr) {
+	    res <- gapminder %>% filter(continent == cont, year == y) %>% summarise(avg = mean(lifeExp))
+	    print(paste0("The avg life expentency of ", cont,  "in the year ", y, " is: ", res))
+	  }
 	}
-	# [1] "The life expectancy in 1952 in Asia is 28.801 to 65.39"
-	# [1] "The life expectancy in 1957 in Asia is 30.332 to 67.84"
-	# ...
-	# [1] "The life expectancy in 1952 in Africa is 30 to 52.724"
-	# [1] "The life expectancy in 1957 in Africa is 31.57 to 58.089"
+	[1] "The avg life expentency of Asiain the year 1952 is: 46.3143939393939"
+	[1] "The avg life expentency of Asiain the year 1957 is: 49.3185442424242"
+	[1] "The avg life expentency of Europein the year 1952 is: 64.4085"
+	[1] "The avg life expentency of Europein the year 1957 is: 66.7030666666667"
+	[1] "The avg life expentency of Africain the year 1952 is: 39.1355"
+	[1] "The avg life expentency of Africain the year 1957 is: 41.2663461538462"
+	[1] "The avg life expentency of Americasin the year 1952 is: 53.27984"
+	[1] "The avg life expentency of Americasin the year 1957 is: 55.96028"
+	[1] "The avg life expentency of Oceaniain the year 1952 is: 69.255"
+	[1] "The avg life expentency of Oceaniain the year 1957 is: 70.295"
 
 **Limitations of for loops**
 
@@ -103,6 +107,10 @@ For loops are very usefule for certain data types, but at times can become very 
 1. Don't use a loop when a vectorized alternative already exists (e.g. creating a loop to sum two vectors versus just using the ``+`` function which is created to add vectors)
 2. Don't grow objects (via ``c``, ``cbind``, etc) during the loop
 3. Allocate an object to hold the results and fill it in during the loop
+
+**Challenge - 1
+
+Write a nested loop to print the minimum and maximum life expentancy of "Canada", "United states" and "United Kingdom" for the year 2007
 
 7. Conditionals
 ===============
@@ -126,29 +134,6 @@ In a simple ``if`` statement, a function is executed if the test expression is t
 	# [1] "Positive number"
 
 Here, ``x > 0`` is ``TRUE``, so the if statement is executed, and the statement is printed.
-
-Let's try this with the gapminder dataset. The world mean life expectancy is 71.5 years. 
-
-.. code-block :: R
-
-	gapminder %>% select(lifeExp) %>% summarize(mean = mean(lifeExp))
-	# 59.47444
-
-	meanLifeExp <- mean(gapminder$lifeExp)
-
-Let's have a ``Greater than avg.`` statement returned if the value within the ``lifeExp`` col exceeds that.
-
-.. code-block :: R
-
-	for(x in gapminder$lifeExp){
-	     if(x > meanLifeExp){
-	          print(paste0(x, ' is greater than avg.'))
-	     }
-	}
-	# [1] "72 is greater than avg."
-	# [1] "71.581 is greater than avg."
-	# [1] "72.95 is greater than avg."
-	# [1] "75.651 is greater than avg."
 
 7.1.2 If..else statement
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -176,7 +161,6 @@ Here the else statement is only used if the first test expression is false, if t
 	# [1] "Negative number"
 
 Here, ``x > 0`` is ``FALSE``, so the ``if`` statement is not executed and instead the ``else`` statement is executed.
-
 
 You can nest as many if...else statements as you want.
 
@@ -218,13 +202,6 @@ A functions is a piece of code written to carry out a specified task; they allow
 
 For example, the base R function ``mean()`` gives you a simple way to get an average; when you read your script you can immediately tell what the code will do.
 
-Without that your code would look like this:
-
-.. code-block :: R
-
-	sum(gapminder['lifeExp'])/nrow(gapminder)
-	mean(gapminder$lifeExp)
-
 But we can also build our own functions to do things over and over again. Generally, if you have to do a task more than 3 times, it's generally better to go ahead and create a custom function.
 
 The general syntax of a function is:
@@ -242,8 +219,8 @@ Let's build our own function. We are going to make a function that will calculat
 
 	my_mean <- function(data,col)
 	{
-	     mean <- sum(data[col])/nrow(data)
-	     return(mean)
+	     avg <- sum(data[col])/nrow(data)
+	     return(avg)
 	}
 
 	my_mean(gapminder,'lifeExp')
@@ -259,7 +236,7 @@ Let's build a new function that will convert a temperature in fahrenheit to kelv
 	     return(kelvin)
 	}
 
-Functions can only return 1 thing. This means that the last thing you return in a function is what is output.  In order to have the output returned, we have to use return. This sends results outside of the function otherwise we see no output.
+Functions can only return 1 thing. This means that the last thing you return in a function is what is output. In order to have the output returned, we have to use return. This sends results outside of the function otherwise we see no output.
 
 .. Note :: 
 
@@ -270,8 +247,7 @@ Functions can only return 1 thing. This means that the last thing you return in 
 	mean()
 	# Error in mean.default() : argument "x" is missing, with no default
 
-The function we created has one argument (``temp``) and we assigned that function a name ``fahr_to_kelvin``.  This name is what we can use to call the function, just like we would call ``mean()``.  
-The body of the function, between the `{}`, is what the function actually does.
+The function we created has one argument (``temp``) and we assigned that function a name ``fahr_to_kelvin``. This name is what we can use to call the function, just like we would call ``mean()``. The body of the function, between the `{}`, is what the function actually does.
 
 When we call this function, the value we input is assigned to the object `temp` and is fed through the code within the body.
 
@@ -283,7 +259,7 @@ When we call this function, the value we input is assigned to the object `temp` 
 	fahr_to_kelvin(212)
 	# [1] 373.15
 
-- **Exercises**
+- **Challenge-2**
 
 1. Create a function called ``Avg`` that calculates the average of 2 numbers. Don't forget to check your work.
 
@@ -295,13 +271,17 @@ When we call this function, the value we input is assigned to the object `temp` 
 
 Plotting is essential and can be done in base R
 
-Something that every researcher knows is important is communicating your findings, and we often do that with plots. We can create fine tuned plots in R using BASE R, without using additional packages. 
+Something that every researcher knows is important is communicating your findings, and we often do that with plots. We can create fine tuned plots in R using Base R, without using additional packages. 
 
 Let's read in a dataset, called ``iris`` and take a look at it.
 
 .. code-block :: R
 
-	iris <- read.csv("datasets/iris.txt", sep="\t")
+	download.file("https://raw.githubusercontent.com/upendrak/intro-r-20170825/master/datasets/iris.txt", "iris.txt")
+
+.. code-block :: R
+
+	iris <- read.csv("iris.txt", sep="\t")
 	str(iris)
 	# Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	150 obs. of  5 variables:
 	#  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
