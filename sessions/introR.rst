@@ -13,27 +13,13 @@ But
 - Command-line driven (programming, not drop-down menus)
 - Gives only what you ask for!
 
-1. Base R vs tidyverse
-======================
 
-You know how when you get a new smartphone, it comes with an email and calendar app... but they're not the greatest? I usually download the Google Calendar and Gmail apps on my phone because, even though they technically do the same thing, they do it better. R is similar in this way.
-
-When you downloaded R, it came with capabilities to import, analyze, and export data.  
-But since R's creation, users have created ``packages`` which act like plug-ins or addons or apps. These add or improve the functionality of R. We'll be using a suite of packages called the `tidyverse` that tries to make R more straightforward for beginners.
-
-The tidyverse has two main goals:
-
-- Work with tidy (not messy) data
-- Make code more human readable
-
-Each package within the tidyverse is meant to do a particular thing, but each ultimately goes back to those two goals. We'll be using two packages in the ``tidyverse``, called ``dplyr`` (for manipulating tidy data in R), and ``ggplot2`` (for visualizing tidy data in R).
-
-2. What is RStudio?
+1. What is RStudio?
 ===================
 
 Often, learning a programming language is made worse by an unintuitive and unhelpful user interface. For our workshop, we will be using RStudio, a graphical user interface (front-end) for R that is slightly more user-friendly than ‘Classic’ R’s GUI.
 
-2.1 The console window  
+1.1 The console window  
 ~~~~~~~~~~~~~~~~~~~~~~
 
 There are some useful features available in the console:
@@ -44,7 +30,7 @@ There are some useful features available in the console:
     - When just typing, use tab autocomplete to fill in object names for you
     - When inside quotes ``'  '``, you can press tab to help you spell folder names correctly
 
-2.2 Trying out the Console
+1.2 Trying out the Console
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We’ll use the ``Console`` window first – as a (fancy!) calculator
@@ -113,7 +99,7 @@ We can use greater than ``>`` or less than ``<`` signs as you would expect.
     0 > 999
     # [1] FALSE
 
-- MULTIPLE CHOICE QUESTION - 1
+- Exercise - 1
 
 Which of the following will **NOT** return **TRUE**? 
 
@@ -122,7 +108,7 @@ Which of the following will **NOT** return **TRUE**?
   C. TRUE > FALSE  
   D. 'a' > 'b'  
 
-2.3 Storing Data
+1.3 Storing Data
 ~~~~~~~~~~~~~~~~
 
 We can quickly make comparisons, but we usually want to do things more sophisticated than that. For example, instead of typing "This is an important string that we want to do analysis on" into the console over and over again, we might want to give it a shorter name and then reference it later.
@@ -149,7 +135,7 @@ R stores data (and everything else) as objects. New objects are created when we 
   x+y
   # [1] 5
 
-2.4 Using the script window
+1.4 Using the script window
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 While fine for occasional use, entering every command by hand is error-prone, and quickly gets tedious. A much better approach is to use a Script window 
@@ -190,7 +176,7 @@ You can use tab complete in R Studio, so once you open the quotes, press tab to 
   setwd("/Users/lori/Documents")
   
 
-- MULTIPLE CHOICE QUESTION - 2
+- EXERCISE - 2
 
 What is the output when we execute the following code?
 
@@ -232,7 +218,7 @@ What is the output when we execute the following code?
   - Avoid other characters; they get interpreted as math (”-”,”*”) or are hard to read (” ”) so should not be used in names
   - Avoid names of existing functions – e.g. summary. Some oneletter choices (c, C, F, t, T and S) are already used by R as names of functions, it’s best to avoid these too
 
-3. Data Types
+2. Data Types
 =============
 There are 6 main types: `double (numeric)`, `integer`, `complex`, `logical` and `character`. The sixth one "raw" will not be discussed in this workshop.
 
@@ -244,7 +230,7 @@ R provides many functions to examine features of vectors and other objects, for 
  - ``attributes()`` - does it have any metadata?
 
 
-3.1 Character
+2.1 Character
 ~~~~~~~~~~~~~
 
 Surround with quotes, can be any keyboard character
@@ -257,7 +243,7 @@ Surround with quotes, can be any keyboard character
   typeof(c)
   # [1] "character"
 
-3.2 Double (numeric)
+2.2 Double (numeric)
 ~~~~~~~~~~~~~~~~~~~~
 
 No quotes, can be any real number, decimal, or whole numbers
@@ -270,7 +256,7 @@ No quotes, can be any real number, decimal, or whole numbers
   typeof(n)
   # [1] "double"
 
-3.3 Integer
+2.3 Integer
 ~~~~~~~~~~~
 
 No quotes, can be any whole number.  Place an `L` behind it, otherwise R will read it as a numeric
@@ -281,7 +267,7 @@ No quotes, can be any whole number.  Place an `L` behind it, otherwise R will re
   class(i)
   # [1] "integer"
 
-3.4 Complex
+2.4 Complex
 ~~~~~~~~~~~
 
 Can use notation like ``+`` ``-``, and values like ``i`` for imaginary units in complex numbers.
@@ -292,7 +278,7 @@ Can use notation like ``+`` ``-``, and values like ``i`` for imaginary units in 
   class(comp)
   # [1] "complex"
 
-3.5 Logical
+2.5 Logical
 ~~~~~~~~~~~
 
 Are equal to either ``TRUE`` or ``FALSE`` in all caps
@@ -305,10 +291,10 @@ Are equal to either ``TRUE`` or ``FALSE`` in all caps
   # [1] "logical"
 
 
-4. Data Structures
+3. Data Structures
 =================
 
-4.1 Atomic Vector
+3.1 Atomic Vector
 ~~~~~~~~~~~~~~~~~
 
 Use ``c()`` notation (stands for combine).  All elements of a vector have to be of the same data type.
@@ -340,7 +326,7 @@ Given that atomic vectors *must* be of all one data type, what will happen when 
 
 R will create a resulting vector with a mode that can most easily accommodate all the elements it contains. This is something called type coercion, and it is the source of many surprises and the reason why we need to be aware of the basic data types and how R will interpret them.
 
-- EXERCISE - 1
+- EXERCISE - 3
 
 Uncover the heirarchy of the data types using the elements in this vector "anothermixed".
 
@@ -375,7 +361,7 @@ Using ``as.datatype`` (``as.logical``, ``as.character``, ``as.factor``, etc) wil
   as.logical(mixed) 
   # [1] TRUE TRUE
 
-4.2 List
+3.2 List
 ~~~~~~~~
 
 Lists are like vectors except that you can use multiple data types.  Make a list using the ``list()`` function.
@@ -430,7 +416,7 @@ We can access a value of a list by referencing the index or by using the label p
   mylist$nums
   # [1] 1.4 5.0
 
-- EXERCISE - 2
+- EXERCISE - 4
 
 What is the difference in the returned objects? # reinforce that lists are made up of other vectors and lists 
 
@@ -441,7 +427,7 @@ What is the difference in the returned objects? # reinforce that lists are made 
 
 
 
-4.3 Matrices
+3.3 Matrices
 ~~~~~~~~~~~~
 
 Matrices are 2 dimensional structures that hold only one data type.  Using ``ncol`` and ``nrow``, you can define its shape. You can fill in the matrix by assigning to ``data``.  By default, it fills in by column, but you can change this using the ``byrow`` argument.
@@ -468,7 +454,7 @@ Matrices are 2 dimensional structures that hold only one data type.  Using ``nco
 
   You can also have multi-dimensional structures called arrays. You can create this using the ``array()`` function, but it is outside the scope of this course.
 
-4.4 Data Frames 
+3.4 Data Frames 
 ~~~~~~~~~~~~~~~
 
 Data Frames are like matrices, but can hold multiple data types.  
@@ -540,7 +526,7 @@ Data Frames are like matrices, but can hold multiple data types.
   names(df)
   # [1] "id" "x"  "y" 
 
-4.5 Factors
+3.5 Factors
 ~~~~~~~~~~~~
 
 Factors are very useful when running statistics, and also clog up less memory than character vectors.
@@ -619,9 +605,9 @@ A useful command to count how many values overlap is the ``table()`` function.  
     # 1 2 0
     # 2 1 2
 
-- EXERCISE - 3
+- EXERCISE - 5
 
-1. Create the following data frame in R:
+Create the following data frame in R:
 
 +-----+---------------+-------------+
 | Day | Magnification | Observation |
@@ -637,18 +623,12 @@ A useful command to count how many values overlap is the ``table()`` function.  
 |  5  |      5        |   Growth    |
 +-----+---------------+-------------+
 
-5. Reading in Data
+4. Reading in Data
 ==================
 
+Let's move the gapminder file into our intro_R directory using command line
+
 First, let's see how we can read in data using base R, using the ``read.csv()`` command:
-
-Download the file first
-
-.. code-block :: R
-
-  download.file("https://raw.githubusercontent.com/upendrak/intro-r-20170825/master/datasets/gapminder_backup.txt" "gapminder.txt")
-
-This will download the file into your current working directory but this is not in your R environment. Now let's read the file into R environment
 
 .. code-block :: R
 
@@ -773,7 +753,7 @@ Other functions useful for summarizing data frames, and their columns;
   median(gapminder$li) # uses pattern-matching (but hard to debug later)
   # [1] 60.7125
 
-- EXERCISE - 4
+- EXERCISE - 6
 
 Import the gapminder data frame again.
 
@@ -987,6 +967,21 @@ Instead of specifying rows/columns of interest by number, or through vectors of 
 
 This is more typing than the other options, but is much easier to debug/reuse.
 
+Base R vs tidyverse
+======================
+
+You know how when you get a new smartphone, it comes with an email and calendar app... but they're not the greatest? I usually download the Google Calendar and Gmail apps on my phone because, even though they technically do the same thing, they do it better. R is similar in this way.
+
+When you downloaded R, it came with capabilities to import, analyze, and export data.  
+But since R's creation, users have created ``packages`` which act like plug-ins or addons or apps. These add or improve the functionality of R. We'll be using a suite of packages called the `tidyverse` that tries to make R more straightforward for beginners.
+
+The tidyverse has two main goals:
+
+- Work with tidy (not messy) data
+- Make code more human readable
+
+Each package within the tidyverse is meant to do a particular thing, but each ultimately goes back to those two goals. We'll be using two packages in the ``tidyverse``, called ``dplyr`` (for manipulating tidy data in R), and ``ggplot2`` (for visualizing tidy data in R).
+
 5.1.2 Dplyr
 ^^^^^^^^^^^
 
@@ -1072,7 +1067,7 @@ If we now wanted to subset by columns and rows,  we can combine `select` and `fi
     #11  2002 Mexico      10742
     #12  2007 Mexico      11978
      
-- Challenge 1
+- EXERCISE - 7
 
 Write a single command (which can span multiple lines and includes pipes) that will produce a dataframe that has the African values for ``lifeExp``, ``country`` and ``year``, but not for other Continents. How many rows does your dataframe have and why?
 
@@ -1170,11 +1165,11 @@ We can also use outside information to help subset data.
 
 ``%in%`` will enable you to search all lines in the column country for all character strings in the two.countries file and will return a TRUE if it finds an one of them.
 
-- CHALLENGE - 2
+- EXERCISE - 8
 
 Create a new dataframe that contains the total GDP for years after 1980 for countries in Europe. 
 
-## Solution to Challenge 2
+## Solution to Exercise 8
 
 EU_gdp <- gapminder %>% filter(continent == 'Europe' & year > 1980) %>% mutate(GDP = pop * gdpPercap)
 
@@ -1259,11 +1254,11 @@ original dataframe into multiple pieces, then we can run functions
 That allowed us to calculate the mean gdpPercap for each continent, but it gets
 even better.
 
-- CHALLENGE - 3
+- EXERCISE - 9
 
-Calculate the average life expectancy per country. Which has the longest average life expectancy and which has the shortest average life expectancy?
+Calculate the average life expectancy per country. Which nation has the longest average life expectancy and which has the shortest average life expectancy?
 
-## Solution to Challenge 3
+## Solution to Excerise 9
 
 lifeExp_bycountry <- gapminder %>%
     group_by(country) %>%
