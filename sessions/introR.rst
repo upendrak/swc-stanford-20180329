@@ -967,20 +967,16 @@ Instead of specifying rows/columns of interest by number, or through vectors of 
 
 This is more typing than the other options, but is much easier to debug/reuse.
 
+.. Note ::
+
 Base R vs tidyverse
-======================
-
-You know how when you get a new smartphone, it comes with an email and calendar app... but they're not the greatest? I usually download the Google Calendar and Gmail apps on my phone because, even though they technically do the same thing, they do it better. R is similar in this way.
-
-When you downloaded R, it came with capabilities to import, analyze, and export data.  
-But since R's creation, users have created ``packages`` which act like plug-ins or addons or apps. These add or improve the functionality of R. We'll be using a suite of packages called the `tidyverse` that tries to make R more straightforward for beginners.
-
-The tidyverse has two main goals:
-
-- Work with tidy (not messy) data
-- Make code more human readable
-
-Each package within the tidyverse is meant to do a particular thing, but each ultimately goes back to those two goals. We'll be using two packages in the ``tidyverse``, called ``dplyr`` (for manipulating tidy data in R), and ``ggplot2`` (for visualizing tidy data in R).
+-You know how when you get a new smartphone, it comes with an email and calendar app... but they're not the greatest? I usually download the Google Calendar and Gmail apps on my phone because, even though they technically do the same thing, they do it better. R is similar in this way.
+-When you downloaded R, it came with capabilities to import, analyze, and export data.  
+-But since R's creation, users have created ``packages`` which act like plug-ins or addons or apps. These add or improve the functionality of R. We'll be using a suite of packages called the `tidyverse` that tries to make R more straightforward for beginners.
+-The tidyverse has two main goals:
+1. Work with tidy (not messy) data
+2. Make code more human readable
+-Each package within the tidyverse is meant to do a particular thing, but each ultimately goes back to those two goals. We'll be using two packages in the ``tidyverse``, called ``dplyr`` (for manipulating tidy data in R), and ``ggplot2`` (for visualizing tidy data in R).
 
 5.1.2 Dplyr
 ^^^^^^^^^^^
